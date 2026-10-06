@@ -1155,8 +1155,11 @@ body.editorial {
 <body class="editorial story">
 <a class="skip-link" href="#main">Skip to case study</a>
 <header class="topbar">
-  <a class="topbar-brand" href="#top"><span class="brand-mark" aria-hidden="true">S</span> SYSTEMS / CASE STUDY</a>
+  <a class="topbar-brand" href="index.html#top"><span class="brand-mark" aria-hidden="true">S</span> SYSTEMS / CASE STUDY</a>
   <nav aria-label="Case study navigation">
+    <a href="index.html" aria-current="page">Case study</a>
+    <a href="case-study-part-2.html">Part 2: SSP features</a>
+    <a href="briefcraft-design-system.html">Briefcraft system</a>
     <a href="#context">Problem</a>
     <a href="#guide">Approach</a>
     <a href="#approach">Insight</a>
@@ -1174,6 +1177,7 @@ body.editorial {
       <div class="hero-actions">
         <a class="button" href="#product">Explore the interactive prototype <span aria-hidden="true">↓</span></a>
         <a class="button secondary" href="#context">Read the case study <span aria-hidden="true">↘</span></a>
+        <a class="button secondary" href="case-study-part-2.html">Explore Part 2: SSP features <span aria-hidden="true">↗</span></a>
       </div>
       <p class="hero-footnote">An internal preparation tool—not an assessment or compliance determination.</p>
     </div>
@@ -1471,6 +1475,10 @@ document.getElementById("add-evidence").addEventListener("click", () => {
   showToast("Sample record added. In a real workflow, assign an owner, a requirement, and a review date.");
 });
 renderControls();
+const requestedScreen = new URLSearchParams(window.location.search).get("view");
+if (["overview", "requirements", "policies", "evidence"].includes(requestedScreen)) {
+  showScreen(requestedScreen);
+}
 </script>
 </body>
 </html>

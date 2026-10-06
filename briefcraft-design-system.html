@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Briefcraft Design System</title>
+<style>
+:root {
+  /* Core neutral palette */
+  --ink: #111111;
+  --muted: #5d646b;
+  --line: #d9dde1;
+  --paper: #fbfaf7;
+  --card: #ffffff;
+  --soft: #f3f1eb;
+
+  /* Primary accent */
+  --accent: #f06543;
+  --accent-text: #a63d24; /* Optional accessible small-text variant */
+
+  /* State surfaces */
+  --good: #e8f3ec;
+  --warn: #fff7f4;
+
+  /* Audience ownership colors */
+  --atlantic: #1f4e79;
+  --atlantic-soft: #eaf2f8;
+  --input: #2f6b4f;
+  --input-soft: #e8f3ec;
+  --christopher: #9a3412;
+  --christopher-soft: #fff0e8;
+  --shared: #5b437a;
+  --shared-soft: #f1ecf7;
+  --reference: #4f5963;
+  --reference-soft: #eef1f3;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--soft);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--soft);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--atlantic);
+}
+
+button {
+  font: inherit;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  color: #ffffff;
+  background: var(--ink);
+  border-bottom: 4px solid var(--accent);
+}
+
+.topbar strong {
+  font-size: 14px;
+}
+
+.topbar nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.topbar a {
+  padding: 5px 8px;
+  color: #ffffff;
+  border: 1px solid #555555;
+  border-radius: 999px;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.guide {
+  width: min(1180px, calc(100% - 32px));
+  margin: 24px auto 60px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.45fr 0.55fr;
+  gap: 22px;
+  padding: 28px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 7px solid var(--accent);
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+.hero .eyebrow {
+  margin-bottom: 8px;
+  color: var(--accent-text);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.hero p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 17px;
+}
+
+.hero-meta {
+  align-self: end;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.hero-meta strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.panel {
+  margin-top: 18px;
+  padding: 22px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.panel h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.panel > p:first-of-type {
+  margin-top: 0;
+}
+
+.kicker {
+  color: var(--accent-text);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.grid-2,
+.grid-3,
+.grid-4 {
+  display: grid;
+  gap: 12px;
+}
+
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.note {
+  padding: 12px 14px;
+  background: var(--warn);
+  border: 1px solid #f5c2b5;
+  border-radius: 11px;
+}
+
+.good-note {
+  padding: 12px 14px;
+  background: var(--good);
+  border: 1px solid #bfd8c7;
+  border-radius: 11px;
+}
+
+.swatch {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.swatch-color {
+  min-height: 72px;
+  border-bottom: 1px solid var(--line);
+}
+
+.swatch-copy {
+  padding: 10px;
+}
+
+.swatch-copy strong,
+.swatch-copy code {
+  display: block;
+}
+
+.swatch-copy code {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.type-sample {
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.type-sample small {
+  color: var(--muted);
+}
+
+.component-gallery {
+  display: grid;
+  gap: 14px;
+}
+
+.demo-frame {
+  overflow: auto;
+  padding: 18px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.demo-page {
+  width: min(8.5in, 100%);
+  margin: 0 auto;
+  padding: 0.39in;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.34;
+}
+
+.demo-page * {
+  box-sizing: border-box;
+}
+
+.demo-page .document-header {
+  display: grid;
+  grid-template-columns: 1.38fr 0.62fr;
+  gap: 18px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.demo-page .eyebrow {
+  margin-bottom: 7px;
+  color: var(--accent-text);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.085em;
+}
+
+.demo-page h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.demo-page .subtitle {
+  max-width: 610px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13.2px;
+}
+
+.demo-page .side-note {
+  align-self: end;
+  color: var(--muted);
+  font-size: 10.5px;
+  text-align: right;
+}
+
+.demo-page .side-note strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.demo-page .document-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+  margin-top: 13px;
+}
+
+.demo-page section {
+  break-inside: avoid;
+}
+
+.demo-page .full {
+  grid-column: 1 / -1;
+}
+
+.demo-page h2 {
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-size: 11.4px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.demo-page h3 {
+  margin: 0 0 4px;
+  font-size: 12.3px;
+  line-height: 1.15;
+}
+
+.demo-page p {
+  margin: 0 0 6px;
+  font-size: 10.85px;
+}
+
+.demo-page ul {
+  margin: 0;
+  padding-left: 15px;
+}
+
+.demo-page li {
+  margin-bottom: 3.7px;
+  font-size: 10.55px;
+}
+
+.demo-page .block {
+  padding: 10px 11px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+}
+
+.demo-page .accent-block {
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+}
+
+.demo-page .value-prop {
+  grid-column: 1 / -1;
+  padding: 17px 20px;
+  color: #ffffff;
+  background: var(--ink);
+  border-top: 6px solid var(--accent);
+  border-radius: 17px;
+}
+
+.demo-page .value-prop h2,
+.demo-page .callout h2 {
+  color: #ffffff;
+}
+
+.demo-page .big-line {
+  margin: 0 0 7px;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.demo-page .support-line {
+  margin: 0;
+  color: #ededed;
+  font-size: 11.6px;
+}
+
+.demo-page .status-row,
+.demo-page .option-grid,
+.demo-page .flow,
+.demo-page .hour-grid {
+  display: grid;
+  margin-top: 7px;
+}
+
+.demo-page .status-row,
+.demo-page .option-grid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.demo-page .status {
+  min-height: 93px;
+  padding: 8px;
+  background: #ffffff;
+  border-top: 3px solid var(--accent);
+}
+
+.demo-page .status strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11.5px;
+  line-height: 1.12;
+}
+
+.demo-page .status span {
+  display: block;
+  color: var(--muted);
+  font-size: 9.9px;
+}
+
+.demo-page .option {
+  position: relative;
+  padding: 9px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+}
+
+.demo-page .option.recommended {
+  border: 2px solid var(--accent);
+}
+
+.demo-page .option p,
+.demo-page .option li {
+  font-size: 9.75px;
+}
+
+.demo-page .tag {
+  display: inline-block;
+  margin-bottom: 5px;
+  padding: 3px 6px;
+  color: #ffffff;
+  background: var(--accent);
+  border-radius: 999px;
+  font-size: 8.4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.demo-page .callout {
+  padding: 12px 14px;
+  color: #ffffff;
+  background: var(--ink);
+  border-radius: 15px;
+}
+
+.demo-page .plain-box,
+.demo-page .good-box {
+  margin-top: 6px;
+  padding: 8px 9px;
+  border-radius: 11px;
+}
+
+.demo-page .plain-box {
+  background: var(--warn);
+  border: 1px solid #f5c2b5;
+}
+
+.demo-page .good-box {
+  background: var(--good);
+  border: 1px solid #bfd8c7;
+}
+
+.demo-page .section-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 7px;
+  align-items: center;
+  margin-top: 8px;
+  padding: 6px 8px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.demo-page .section-key-title {
+  margin-right: 2px;
+  font-size: 8.8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.demo-page .key-item,
+.demo-page .audience-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.055em;
+  white-space: nowrap;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}
+
+.demo-page .key-item {
+  padding: 3px 6px;
+  font-size: 7.7px;
+}
+
+.demo-page .audience-label {
+  margin: 0 0 6px;
+  padding: 3px 7px;
+  font-size: 7.9px;
+}
+
+.demo-page .key-item::before,
+.demo-page .audience-label::before {
+  content: "■";
+  font-size: 7px;
+}
+
+.demo-page .key-atlantic,
+.demo-page .audience-atlantic .audience-label {
+  color: var(--atlantic);
+  background: var(--atlantic-soft);
+}
+
+.demo-page .key-input,
+.demo-page .audience-input .audience-label {
+  color: var(--input);
+  background: var(--input-soft);
+}
+
+.demo-page .key-christopher,
+.demo-page .audience-christopher .audience-label {
+  color: var(--christopher);
+  background: var(--christopher-soft);
+}
+
+.demo-page .key-shared,
+.demo-page .audience-shared .audience-label {
+  color: var(--shared);
+  background: var(--shared-soft);
+}
+
+.demo-page .audience-atlantic {
+  border-left: 5px solid var(--atlantic);
+}
+
+.demo-page .audience-input {
+  border-left: 5px solid var(--input);
+}
+
+.demo-page .audience-christopher {
+  border-left: 5px solid var(--christopher);
+}
+
+.demo-page .audience-shared {
+  border-left: 5px solid var(--shared);
+}
+
+.demo-page .value-prop .audience-label,
+.demo-page .callout .audience-label {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+.code-wrap {
+  position: relative;
+  margin-top: 10px;
+}
+
+.copy-button {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  z-index: 2;
+  padding: 6px 9px;
+  color: #ffffff;
+  background: var(--ink);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+pre {
+  max-height: 440px;
+  overflow: auto;
+  margin: 0;
+  padding: 18px;
+  color: #f5f5f5;
+  background: #171717;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre;
+}
+
+.inline-code {
+  padding: 2px 5px;
+  background: #efefef;
+  border-radius: 5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+
+.rule-list {
+  display: grid;
+  gap: 9px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rule-list li {
+  padding: 10px 12px;
+  background: #ffffff;
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+}
+
+.checklist {
+  columns: 2;
+  column-gap: 24px;
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+
+.checklist li {
+  break-inside: avoid;
+  margin-bottom: 8px;
+}
+
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.spec-table th,
+.spec-table td {
+  padding: 9px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+
+.spec-table th {
+  background: #ffffff;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.spec-table td {
+  font-size: 14px;
+}
+
+.do-dont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.do,
+.dont {
+  padding: 14px;
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.do {
+  border: 1px solid #bfd8c7;
+  border-top: 5px solid var(--input);
+}
+
+.dont {
+  border: 1px solid #f5c2b5;
+  border-top: 5px solid var(--christopher);
+}
+
+@media (max-width: 850px) {
+  .hero,
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .do-dont {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    position: static;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .checklist {
+    columns: 1;
+  }
+
+  .demo-page .document-header,
+  .demo-page .document-grid,
+  .demo-page .status-row,
+  .demo-page .option-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-page .side-note {
+    text-align: left;
+  }
+}
+
+@media print {
+  .topbar,
+  .copy-button {
+    display: none;
+  }
+
+  body,
+  html {
+    background: #ffffff;
+  }
+
+  .guide {
+    width: auto;
+    margin: 0;
+  }
+
+  .hero,
+  .panel {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <strong>Briefcraft Design System</strong>
+  <nav aria-label="Design system sections">
+    <a href="index.html">Case study</a>
+    <a href="case-study-part-2.html">Part 2: SSP features</a>
+    <a href="#principles">Principles</a>
+    <a href="#tokens">Tokens</a>
+    <a href="#type">Type</a>
+    <a href="#anatomy">Page anatomy</a>
+    <a href="#components">Components</a>
+    <a href="#accessibility">Accessibility</a>
+    <a href="#starter">Starter code</a>
+    <a href="#prompt">Prompt</a>
+  </nav>
+</div>
+
+<main class="guide">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Reusable HTML document system · Extracted from the Atlantic CMMC brief</div>
+      <h1>Build compact, executive-ready briefs with consistent structure.</h1>
+      <p>
+        This reference captures the visual rules, CSS tokens, page geometry,
+        component patterns, audience indicators, print behavior, and writing
+        conventions used in the source document.
+      </p>
+    </div>
+    <aside class="hero-meta">
+      <strong>Best for</strong>
+      Decision briefs, implementation plans, executive readouts, research summaries,
+      compliance documents, and multi-page printable HTML.
+    </aside>
+  </section>
+
+  <section class="panel" id="principles">
+    <div class="kicker">Visual DNA</div>
+    <h2>Core design principles</h2>
+    <div class="grid-3">
+      <div class="type-sample">
+        <strong>Print-first structure</strong>
+        <p>Every document is composed as a sequence of US Letter pages with predictable internal padding and page breaks.</p>
+      </div>
+      <div class="type-sample">
+        <strong>Editorial hierarchy</strong>
+        <p>A small eyebrow sets context. A large headline states the decision. A muted subtitle explains the use case.</p>
+      </div>
+      <div class="type-sample">
+        <strong>Modular information</strong>
+        <p>Content is divided into reusable cards, option grids, flows, callouts, tables, and ownership-labeled sections.</p>
+      </div>
+      <div class="type-sample">
+        <strong>Restrained palette</strong>
+        <p>Neutral paper, white cards, near-black ink, one orange accent, and semantic audience colors.</p>
+      </div>
+      <div class="type-sample">
+        <strong>Dense but controlled</strong>
+        <p>Small type and tight spacing are balanced by short paragraphs, borders, clear grouping, and strong headings.</p>
+      </div>
+      <div class="type-sample">
+        <strong>Audience clarity</strong>
+        <p>Every section can identify who acts, who supplies input, who owns work, or who shares a decision.</p>
+      </div>
+    </div>
+
+    <ul class="rule-list">
+      <li><strong>Use one dominant message per page.</strong> Secondary sections should support the page headline.</li>
+      <li><strong>Use full-width components for conclusions, critical context, and complex tables.</strong></li>
+      <li><strong>Use two-column cards for supporting content.</strong> Do not fill every space simply because it exists.</li>
+      <li><strong>Keep ornament minimal.</strong> The visual identity comes from proportion, contrast, borders, and semantic labels.</li>
+    </ul>
+  </section>
+
+  <section class="panel" id="tokens">
+    <div class="kicker">Foundation</div>
+    <h2>Color tokens</h2>
+    <p>The first ten colors are direct extractions. <span class="inline-code">--accent-text</span> is an accessibility safeguard for small orange text.</p>
+    <div class="grid-4">
+      <div class="swatch"><div class="swatch-color" style="background:#111111"></div><div class="swatch-copy"><strong>Ink</strong><code>--ink: #111111</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#5d646b"></div><div class="swatch-copy"><strong>Muted</strong><code>--muted: #5d646b</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#d9dde1"></div><div class="swatch-copy"><strong>Line</strong><code>--line: #d9dde1</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#fbfaf7"></div><div class="swatch-copy"><strong>Paper</strong><code>--paper: #fbfaf7</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#ffffff"></div><div class="swatch-copy"><strong>Card</strong><code>--card: #ffffff</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#f3f1eb"></div><div class="swatch-copy"><strong>Soft</strong><code>--soft: #f3f1eb</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#f06543"></div><div class="swatch-copy"><strong>Accent</strong><code>--accent: #f06543</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#a63d24"></div><div class="swatch-copy"><strong>Accent text</strong><code>--accent-text: #a63d24</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#e8f3ec"></div><div class="swatch-copy"><strong>Good surface</strong><code>--good: #e8f3ec</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#fff7f4"></div><div class="swatch-copy"><strong>Warning surface</strong><code>--warn: #fff7f4</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#1f4e79"></div><div class="swatch-copy"><strong>Client action</strong><code>--atlantic: #1f4e79</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#2f6b4f"></div><div class="swatch-copy"><strong>Input required</strong><code>--input: #2f6b4f</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#9a3412"></div><div class="swatch-copy"><strong>Author role</strong><code>--christopher: #9a3412</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#5b437a"></div><div class="swatch-copy"><strong>Shared decision</strong><code>--shared: #5b437a</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#4f5963"></div><div class="swatch-copy"><strong>Reference</strong><code>--reference: #4f5963</code></div></div>
+    </div>
+
+    <div class="code-wrap">
+      <button class="copy-button" data-copy="tokens">Copy tokens</button>
+      <pre id="tokens"><code>:root {
+  /* Core neutral palette */
+  --ink: #111111;
+  --muted: #5d646b;
+  --line: #d9dde1;
+  --paper: #fbfaf7;
+  --card: #ffffff;
+  --soft: #f3f1eb;
+
+  /* Primary accent */
+  --accent: #f06543;
+  --accent-text: #a63d24; /* Optional accessible small-text variant */
+
+  /* State surfaces */
+  --good: #e8f3ec;
+  --warn: #fff7f4;
+
+  /* Audience ownership colors */
+  --atlantic: #1f4e79;
+  --atlantic-soft: #eaf2f8;
+  --input: #2f6b4f;
+  --input-soft: #e8f3ec;
+  --christopher: #9a3412;
+  --christopher-soft: #fff0e8;
+  --shared: #5b437a;
+  --shared-soft: #f1ecf7;
+  --reference: #4f5963;
+  --reference-soft: #eef1f3;
+}</code></pre>
+    </div>
+  </section>
+
+  <section class="panel" id="type">
+    <div class="kicker">Typography</div>
+    <h2>Type scale and hierarchy</h2>
+    <div class="grid-2">
+      <div class="type-sample">
+        <small>Eyebrow · 10.5px · 700 · uppercase · 0.085em tracking</small>
+        <div style="margin-top:8px;color:var(--accent-text);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.085em;">Organization · Topic · Brief type</div>
+      </div>
+      <div class="type-sample">
+        <small>Headline · 28px · 1.04 line-height · tight tracking</small>
+        <div style="margin-top:8px;font-size:28px;font-weight:700;line-height:1.04;letter-spacing:-.03em;">State the decision, not the topic.</div>
+      </div>
+      <div class="type-sample">
+        <small>Subtitle · 13.2px · muted</small>
+        <div style="margin-top:8px;color:var(--muted);font-size:13.2px;">Explain the audience, purpose, and scope in two or three short lines.</div>
+      </div>
+      <div class="type-sample">
+        <small>Section heading · 11.4px · uppercase · 0.08em tracking</small>
+        <div style="margin-top:8px;font-size:11.4px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;">Recommended path</div>
+      </div>
+      <div class="type-sample">
+        <small>Body · 10.85px · 1.34 line-height</small>
+        <div style="margin-top:8px;font-size:10.85px;line-height:1.34;">Use concise paragraphs with clear nouns, active verbs, and specific next actions.</div>
+      </div>
+      <div class="type-sample">
+        <small>Big line · 23px · 800</small>
+        <div style="margin-top:8px;font-size:23px;font-weight:800;line-height:1.08;letter-spacing:-.03em;">Put the strongest conclusion here.</div>
+      </div>
+    </div>
+
+    <table class="spec-table" style="margin-top:14px;">
+      <thead><tr><th>Role</th><th>Source size</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>H1</td><td>28px, 26px compact</td><td>One action-oriented statement per page.</td></tr>
+        <tr><td>Subtitle</td><td>13.2px, 12.5px compact</td><td>Purpose and scope. Avoid dense background explanation.</td></tr>
+        <tr><td>H2</td><td>11.4px</td><td>Short uppercase section labels.</td></tr>
+        <tr><td>H3</td><td>12.3px</td><td>Card titles, option names, or step titles.</td></tr>
+        <tr><td>Body</td><td>10.85px</td><td>Source-matching density.</td></tr>
+        <tr><td>Readable body</td><td>11.5px</td><td>Recommended when low-vision readability matters more than fitting a fixed page count.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel" id="anatomy">
+    <div class="kicker">Page system</div>
+    <h2>Page anatomy</h2>
+    <div class="grid-3">
+      <div class="type-sample"><strong>Canvas</strong><p>8.5in × 11in. Paper background. 0.39in internal padding.</p></div>
+      <div class="type-sample"><strong>Header ratio</strong><p>1.38fr content column and 0.62fr metadata column. 18px gap.</p></div>
+      <div class="type-sample"><strong>Main grid</strong><p>Two equal columns with 11px gap. Use <span class="inline-code">.full</span> for spanning sections.</p></div>
+      <div class="type-sample"><strong>Screen treatment</strong><p>24px page margin, subtle border, and restrained shadow.</p></div>
+      <div class="type-sample"><strong>Print treatment</strong><p>No outer margin, border, or shadow. Fixed Letter dimensions.</p></div>
+      <div class="type-sample"><strong>Responsive treatment</strong><p>Below 700px, collapse headers, content grids, and multi-card rows to one column.</p></div>
+    </div>
+
+    <div class="demo-frame" style="margin-top:14px;">
+      <article class="demo-page">
+        <header class="document-header">
+          <div>
+            <div class="eyebrow">Company · Program · Decision brief</div>
+            <h1>Use the headline to make the decision obvious.</h1>
+            <p class="subtitle">The subtitle explains the current state, what the reader should understand, and what this document enables.</p>
+          </div>
+          <div class="side-note"><strong>Prepared for Leadership</strong>Prepared by Author<br>Current as of Month Day, Year</div>
+        </header>
+
+        <div class="section-key">
+          <span class="section-key-title">Section guide</span>
+          <span class="key-item key-atlantic">Client action</span>
+          <span class="key-item key-input">Input required</span>
+          <span class="key-item key-christopher">Author work</span>
+          <span class="key-item key-shared">Shared decision</span>
+        </div>
+
+        <main class="document-grid">
+          <section class="value-prop audience-atlantic">
+            <div class="audience-label">Client action</div>
+            <h2>Recommended path</h2>
+            <p class="big-line">Make the primary recommendation visually dominant.</p>
+            <p class="support-line">Use one concise supporting paragraph to add conditions, boundaries, or required verification.</p>
+          </section>
+
+          <section class="block audience-input">
+            <div class="audience-label">Input required</div>
+            <h2>Information needed</h2>
+            <ul><li>Required record or decision.</li><li>Owner or responsible party.</li><li>Timing or dependency.</li></ul>
+          </section>
+
+          <section class="block audience-christopher">
+            <div class="audience-label">Author work</div>
+            <h2>Planned deliverable</h2>
+            <p>Describe the analysis, implementation, or documentation work in concrete terms.</p>
+          </section>
+        </main>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel" id="components">
+    <div class="kicker">Component library</div>
+    <h2>Reusable document components</h2>
+    <div class="component-gallery">
+      <div class="demo-frame">
+        <article class="demo-page">
+          <main class="document-grid" style="margin-top:0;">
+            <section class="block full accent-block audience-atlantic">
+              <div class="audience-label">Client context</div>
+              <h2>Status summary</h2>
+              <div class="status-row">
+                <div class="status"><strong>Status one</strong><span>Use for concise facts, changes, or conditions.</span></div>
+                <div class="status"><strong>Status two</strong><span>Keep each cell balanced in length and density.</span></div>
+                <div class="status"><strong>Status three</strong><span>Use the accent bar to unify the group.</span></div>
+              </div>
+              <div class="plain-box"><strong>Important distinction:</strong> Use this surface for caveats, boundaries, or terms that could be misunderstood.</div>
+            </section>
+
+            <section class="block full audience-shared">
+              <div class="audience-label">Shared decision</div>
+              <h2>Options</h2>
+              <div class="option-grid">
+                <div class="option"><div class="tag">Too passive</div><h3>Option A</h3><p>Describe the lowest-effort path and its risk.</p></div>
+                <div class="option recommended"><div class="tag">Recommended</div><h3>Option B</h3><p>Describe the balanced path and why it is preferred.</p></div>
+                <div class="option"><div class="tag">Conditional</div><h3>Option C</h3><p>Describe when the higher-cost or accelerated path is justified.</p></div>
+              </div>
+            </section>
+
+            <section class="callout full audience-christopher">
+              <div class="audience-label">Author role</div>
+              <h2>Operating model</h2>
+              <p style="font-size:15px;font-weight:800;line-height:1.15;color:#fff;">Use a dark callout for the operating model, final conclusion, or high-priority ownership statement.</p>
+            </section>
+
+            <section class="block full audience-atlantic">
+              <div class="audience-label">Client action</div>
+              <h2>Positive confirmation</h2>
+              <div class="good-box"><strong>What this means:</strong> Use the green surface for confirmed readiness, a validated distinction, or a low-risk action.</div>
+            </section>
+          </main>
+        </article>
+      </div>
+
+      <table class="spec-table">
+        <thead><tr><th>Component</th><th>Class</th><th>Best use</th></tr></thead>
+        <tbody>
+          <tr><td>Standard card</td><td><code>.block</code></td><td>Most body sections.</td></tr>
+          <tr><td>Accent card</td><td><code>.block.accent-block</code></td><td>Context or action sections needing extra emphasis.</td></tr>
+          <tr><td>Hero conclusion</td><td><code>.value-prop</code></td><td>Primary recommendation or strongest conclusion.</td></tr>
+          <tr><td>Dark callout</td><td><code>.callout</code></td><td>Operating model, major role, or final directive.</td></tr>
+          <tr><td>Status row</td><td><code>.status-row</code></td><td>Three parallel facts or changes.</td></tr>
+          <tr><td>Option grid</td><td><code>.option-grid</code></td><td>Three decision paths with one recommended option.</td></tr>
+          <tr><td>Flow</td><td><code>.flow</code></td><td>Five sequential steps.</td></tr>
+          <tr><td>Hour grid</td><td><code>.hour-grid</code></td><td>Work allocation, phased effort, or project hours.</td></tr>
+          <tr><td>Plain box</td><td><code>.plain-box</code></td><td>Warning, clarification, or misunderstood term.</td></tr>
+          <tr><td>Good box</td><td><code>.good-box</code></td><td>Validated conclusion or safe next action.</td></tr>
+          <tr><td>Reference list</td><td><code>.source-list</code></td><td>Compact sources on the final page.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="kicker">Semantic ownership</div>
+    <h2>Audience indicator system</h2>
+    <p>Assign one semantic class to each audience-specific section. The left border, pill, square marker, and text label work together.</p>
+    <table class="spec-table">
+      <thead><tr><th>Meaning</th><th>Section class</th><th>Label examples</th></tr></thead>
+      <tbody>
+        <tr><td>Client action or context</td><td><code>.audience-atlantic</code></td><td>Client action, Client context</td></tr>
+        <tr><td>Client input required</td><td><code>.audience-input</code></td><td>Input required, Client decision needed</td></tr>
+        <tr><td>Author work or role</td><td><code>.audience-christopher</code></td><td>Author work, Author deliverable, Author role</td></tr>
+        <tr><td>Shared decision</td><td><code>.audience-shared</code></td><td>Shared decision, Joint ownership</td></tr>
+        <tr><td>Sources or supporting material</td><td><code>.audience-reference</code></td><td>Reference, Primary sources</td></tr>
+      </tbody>
+    </table>
+    <div class="note" style="margin-top:12px;">
+      <strong>Reusable naming rule:</strong> The CSS class can stay stable even when the visible label changes to match a different client, organization, or author.
+    </div>
+  </section>
+
+  <section class="panel" id="accessibility">
+    <div class="kicker">Web-informed safeguards</div>
+    <h2>Accessibility and readability rules</h2>
+    <div class="do-dont">
+      <div class="do">
+        <strong>Do</strong>
+        <ul>
+          <li>Use visible text with every audience color.</li>
+          <li>Use the darker <code>--accent-text</code> for small orange text.</li>
+          <li>Keep body copy black or muted gray on light surfaces.</li>
+          <li>Use <code>.accessible</code> when the audience benefits from larger type.</li>
+          <li>Keep headings, lists, and tables semantically structured.</li>
+          <li>Test browser zoom at 200 percent and confirm no horizontal clipping.</li>
+        </ul>
+      </div>
+      <div class="dont">
+        <strong>Do not</strong>
+        <ul>
+          <li>Use orange body text at the source accent value.</li>
+          <li>Communicate ownership with a border color alone.</li>
+          <li>Shrink body text further to force content onto a page.</li>
+          <li>Use long all-caps sentences.</li>
+          <li>Put essential details only in footnotes or tiny source text.</li>
+          <li>Lock screen layouts to Letter width on mobile.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="good-note" style="margin-top:12px;">
+      <strong>Contrast note:</strong> The original orange accent is appropriate for bars, borders, filled tags with white text, and large emphasis. Its contrast against white is not sufficient for small normal text, so this kit adds a darker orange text token while preserving the original visual accent.
+    </div>
+
+    <p style="margin-bottom:0;">
+      The responsive and print rules in this kit follow standard CSS media-query and paged-media patterns. Sections use
+      <code>break-inside: avoid</code> to reduce awkward splits. WCAG 2.2 calls for at least 4.5:1 contrast for normal text and 3:1 for large text.
+    </p>
+  </section>
+
+  <section class="panel">
+    <div class="kicker">Content behavior</div>
+    <h2>Writing and composition rules</h2>
+    <ul class="checklist">
+      <li>Write the page H1 as a conclusion, directive, or decision.</li>
+      <li>Use the eyebrow for organization, topic, and document type.</li>
+      <li>Limit the subtitle to the minimum context needed to interpret the page.</li>
+      <li>Use one or two short paragraphs per section.</li>
+      <li>Use lists only when the items are genuinely parallel.</li>
+      <li>Use strong labels before explanatory text in warning and confirmation boxes.</li>
+      <li>Use a three-option pattern when leadership must compare paths.</li>
+      <li>Mark one option as recommended. Explain why in plain language.</li>
+      <li>Use a five-step flow for sequences. Use a table for comparisons.</li>
+      <li>Place detailed sources on the last page or in a dedicated full-width section.</li>
+      <li>Expand acronyms on first use when the audience may not know them.</li>
+      <li>Remove drafting notes, presentation advice, and other meta commentary.</li>
+    </ul>
+  </section>
+
+  <section class="panel" id="starter">
+    <div class="kicker">Implementation</div>
+    <h2>Starter CSS</h2>
+    <p>This normalized stylesheet preserves the original design system and adds modern print break properties plus the optional accessibility mode.</p>
+    <div class="code-wrap">
+      <button class="copy-button" data-copy="base-css">Copy CSS</button>
+      <pre id="base-css"><code>:root {
+  /* Core neutral palette */
+  --ink: #111111;
+  --muted: #5d646b;
+  --line: #d9dde1;
+  --paper: #fbfaf7;
+  --card: #ffffff;
+  --soft: #f3f1eb;
+
+  /* Primary accent */
+  --accent: #f06543;
+  --accent-text: #a63d24; /* Optional accessible small-text variant */
+
+  /* State surfaces */
+  --good: #e8f3ec;
+  --warn: #fff7f4;
+
+  /* Audience ownership colors */
+  --atlantic: #1f4e79;
+  --atlantic-soft: #eaf2f8;
+  --input: #2f6b4f;
+  --input-soft: #e8f3ec;
+  --christopher: #9a3412;
+  --christopher-soft: #fff0e8;
+  --shared: #5b437a;
+  --shared-soft: #f1ecf7;
+  --reference: #4f5963;
+  --reference-soft: #eef1f3;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--soft);
+}
+
+body {
+  margin: 0;
+  background: var(--soft);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.34;
+}
+
+.page {
+  width: 8.5in;
+  min-height: 11in;
+  margin: 24px auto;
+  padding: 0.39in;
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+.page + .page {
+  break-before: page;
+  page-break-before: always;
+}
+
+.document-header {
+  display: grid;
+  grid-template-columns: 1.38fr 0.62fr;
+  gap: 18px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.eyebrow {
+  margin-bottom: 7px;
+  color: var(--accent-text);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.085em;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.subtitle {
+  max-width: 610px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13.2px;
+}
+
+.side-note {
+  align-self: end;
+  color: var(--muted);
+  font-size: 10.5px;
+  text-align: right;
+}
+
+.side-note strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.document-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+  margin-top: 13px;
+}
+
+section {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+h2 {
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-size: 11.4px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+h3 {
+  margin: 0 0 4px;
+  font-size: 12.3px;
+  line-height: 1.15;
+}
+
+p {
+  margin: 0 0 6px;
+  font-size: 10.85px;
+}
+
+ul {
+  margin: 0;
+  padding-left: 15px;
+}
+
+li {
+  margin-bottom: 3.7px;
+  font-size: 10.55px;
+}
+
+.block {
+  padding: 10px 11px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+}
+
+.accent-block {
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+}
+
+.value-prop {
+  grid-column: 1 / -1;
+  padding: 17px 20px;
+  color: #ffffff;
+  background: var(--ink);
+  border-top: 6px solid var(--accent);
+  border-radius: 17px;
+}
+
+.value-prop h2,
+.callout h2 {
+  color: #ffffff;
+}
+
+.big-line {
+  margin: 0 0 7px;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.support-line {
+  margin: 0;
+  color: #ededed;
+  font-size: 11.6px;
+  line-height: 1.35;
+}
+
+.callout {
+  padding: 12px 14px;
+  color: #ffffff;
+  background: var(--ink);
+  border-radius: 15px;
+}
+
+.callout p {
+  margin: 0;
+  color: #e9e9e9;
+}
+
+.plain-box,
+.good-box {
+  margin-top: 6px;
+  padding: 8px 9px;
+  border-radius: 11px;
+}
+
+.plain-box {
+  background: var(--warn);
+  border: 1px solid #f5c2b5;
+}
+
+.good-box {
+  background: var(--good);
+  border: 1px solid #bfd8c7;
+}
+
+.plain-box strong,
+.good-box strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 11.2px;
+}
+
+.status-row,
+.option-grid,
+.flow,
+.hour-grid {
+  display: grid;
+  margin-top: 7px;
+}
+
+.status-row,
+.option-grid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.flow {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.hour-grid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+
+.status,
+.flow-step {
+  padding: 8px;
+  background: #ffffff;
+  border-top: 3px solid var(--accent);
+}
+
+.status {
+  min-height: 93px;
+}
+
+.status strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11.5px;
+  line-height: 1.12;
+}
+
+.status span {
+  display: block;
+  color: var(--muted);
+  font-size: 9.9px;
+}
+
+.option,
+.hour {
+  position: relative;
+  padding: 9px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+}
+
+.option.recommended {
+  border: 2px solid var(--accent);
+}
+
+.option p,
+.option li {
+  font-size: 9.75px;
+}
+
+.tag {
+  display: inline-block;
+  margin-bottom: 5px;
+  padding: 3px 6px;
+  color: #ffffff;
+  background: var(--accent);
+  border-radius: 999px;
+  font-size: 8.4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.flow-step {
+  min-height: 83px;
+  padding: 7px;
+}
+
+.flow-step b {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 10.6px;
+  line-height: 1.12;
+}
+
+.flow-step span {
+  display: block;
+  color: var(--muted);
+  font-size: 9.3px;
+}
+
+.hour {
+  min-height: 92px;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.hour .num {
+  color: var(--accent-text);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.hour strong {
+  display: block;
+  margin: 4px 0 3px;
+  font-size: 10.6px;
+}
+
+.hour span {
+  display: block;
+  color: var(--muted);
+  font-size: 9.35px;
+}
+
+table {
+  width: 100%;
+  margin-top: 5px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 5px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  font-size: 9.2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+td {
+  font-size: 9.65px;
+}
+
+.section-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 7px;
+  align-items: center;
+  margin-top: 8px;
+  padding: 6px 8px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.section-key-title {
+  margin-right: 2px;
+  font-size: 8.8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.key-item,
+.audience-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.055em;
+  white-space: nowrap;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}
+
+.key-item {
+  padding: 3px 6px;
+  font-size: 7.7px;
+}
+
+.audience-label {
+  margin: 0 0 6px;
+  padding: 3px 7px;
+  font-size: 7.9px;
+}
+
+.key-item::before,
+.audience-label::before {
+  content: &quot;■&quot;;
+  font-size: 7px;
+  line-height: 1;
+}
+
+.key-atlantic,
+.audience-atlantic .audience-label {
+  color: var(--atlantic);
+  background: var(--atlantic-soft);
+}
+
+.key-input,
+.audience-input .audience-label {
+  color: var(--input);
+  background: var(--input-soft);
+}
+
+.key-christopher,
+.audience-christopher .audience-label {
+  color: var(--christopher);
+  background: var(--christopher-soft);
+}
+
+.key-shared,
+.audience-shared .audience-label {
+  color: var(--shared);
+  background: var(--shared-soft);
+}
+
+.key-reference,
+.audience-reference .audience-label {
+  color: var(--reference);
+  background: var(--reference-soft);
+}
+
+section.audience-atlantic {
+  border-left: 5px solid var(--atlantic);
+}
+
+section.audience-input {
+  border-left: 5px solid var(--input);
+}
+
+section.audience-christopher {
+  border-left: 5px solid var(--christopher);
+}
+
+section.audience-shared {
+  border-left: 5px solid var(--shared);
+}
+
+section.audience-reference {
+  border-left: 5px solid var(--reference);
+}
+
+.value-prop .audience-label,
+.callout .audience-label {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+.source-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.source-list li {
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 8.65px;
+  line-height: 1.23;
+}
+
+.source-list strong {
+  color: var(--ink);
+}
+
+.footer-note {
+  position: absolute;
+  right: 0.39in;
+  bottom: 0.18in;
+  left: 0.39in;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 4px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font-size: 8.3px;
+}
+
+/* Optional exact-density mode from the source document */
+.page.compact h1 { font-size: 26px; }
+.page.compact .subtitle { font-size: 12.5px; }
+.page.compact .document-grid { gap: 9px; margin-top: 12px; }
+.page.compact .block { padding: 8.5px 10px; }
+.page.compact p { margin-bottom: 5px; font-size: 10.2px; }
+.page.compact li { margin-bottom: 3px; font-size: 9.8px; }
+.page.compact th { padding: 4px; font-size: 8.6px; }
+.page.compact td { padding: 4px; font-size: 8.9px; }
+
+/* Optional readability mode. This is a recommended extension. */
+.page.accessible p,
+.page.accessible li {
+  font-size: 11.5px;
+  line-height: 1.42;
+}
+
+.page.accessible h2 {
+  font-size: 12px;
+}
+
+.page.accessible .audience-label,
+.page.accessible .key-item {
+  font-size: 9px;
+}
+
+.page.accessible .source-list li,
+.page.accessible .footer-note {
+  font-size: 9.5px;
+}
+
+@page {
+  size: Letter;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff;
+  }
+
+  .page {
+    width: 8.5in;
+    height: 11in;
+    min-height: 11in;
+    margin: 0;
+    overflow: hidden;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .section-key,
+  .key-item,
+  .audience-label {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .page {
+    width: auto;
+    min-height: auto;
+    margin: 0;
+    padding: 28px;
+  }
+
+  .document-header,
+  .document-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .side-note {
+    text-align: left;
+  }
+
+  .status-row,
+  .option-grid,
+  .flow,
+  .hour-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-note {
+    position: static;
+    margin-top: 14px;
+  }
+}</code></pre>
+    </div>
+
+    <h2 style="margin-top:18px;">Starter page markup</h2>
+    <div class="code-wrap">
+      <button class="copy-button" data-copy="starter-markup">Copy markup</button>
+      <pre id="starter-markup"><code>&lt;article class=&quot;page&quot;&gt;
+  &lt;header class=&quot;document-header&quot;&gt;
+    &lt;div&gt;
+      &lt;div class=&quot;eyebrow&quot;&gt;Organization · Topic · Document type&lt;/div&gt;
+      &lt;h1&gt;Action-oriented headline that states the decision.&lt;/h1&gt;
+      &lt;p class=&quot;subtitle&quot;&gt;
+        Two or three concise lines explaining the situation, audience,
+        and intended use of the document.
+      &lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;side-note&quot;&gt;
+      &lt;strong&gt;Prepared for Organization&lt;/strong&gt;
+      Prepared by Name&lt;br&gt;
+      Current as of Month Day, Year
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;div class=&quot;section-key&quot; aria-label=&quot;Section ownership guide&quot;&gt;
+    &lt;span class=&quot;section-key-title&quot;&gt;Section guide&lt;/span&gt;
+    &lt;span class=&quot;key-item key-atlantic&quot;&gt;Client action or context&lt;/span&gt;
+    &lt;span class=&quot;key-item key-input&quot;&gt;Client input required&lt;/span&gt;
+    &lt;span class=&quot;key-item key-christopher&quot;&gt;Author work or role&lt;/span&gt;
+    &lt;span class=&quot;key-item key-shared&quot;&gt;Shared decision&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;main class=&quot;document-grid&quot;&gt;
+    &lt;section class=&quot;value-prop audience-atlantic&quot;&gt;
+      &lt;div class=&quot;audience-label&quot;&gt;Client action&lt;/div&gt;
+      &lt;h2&gt;Recommended path&lt;/h2&gt;
+      &lt;p class=&quot;big-line&quot;&gt;Put the most important conclusion here.&lt;/p&gt;
+      &lt;p class=&quot;support-line&quot;&gt;
+        Explain what the reader should do, why, and what must be verified.
+      &lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;section class=&quot;block full audience-shared&quot;&gt;
+      &lt;div class=&quot;audience-label&quot;&gt;Shared decision&lt;/div&gt;
+      &lt;h2&gt;Decision area&lt;/h2&gt;
+      &lt;p&gt;Use cards, options, a table, or a short flow as needed.&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer class=&quot;footer-note&quot;&gt;
+    &lt;span&gt;Document name&lt;/span&gt;
+    &lt;span&gt;Page 1 of 1&lt;/span&gt;
+  &lt;/footer&gt;
+&lt;/article&gt;</code></pre>
+    </div>
+  </section>
+
+  <section class="panel" id="prompt">
+    <div class="kicker">Future generation</div>
+    <h2>Prompt block for future HTML work</h2>
+    <p>Paste this prompt with the design system file or include it in a project instruction.</p>
+    <div class="code-wrap">
+      <button class="copy-button" data-copy="future-prompt">Copy prompt</button>
+      <pre id="future-prompt"><code>Create a self-contained HTML decision brief using the Briefcraft Design System.
+
+Requirements:
+1. Use US Letter pages at 8.5in × 11in with 0.39in internal padding.
+2. Use Arial, Helvetica, sans-serif.
+3. Use the exact core palette and semantic audience colors from the design system.
+4. Build a two-column document grid, with `.full` for full-width sections.
+5. Use a strong editorial header with eyebrow, action-oriented H1, concise subtitle, and right-aligned preparation note.
+6. Use modular components only: block, accent-block, value-prop, callout, status-row, option-grid, flow, hour-grid, table, plain-box, good-box, section-key, audience-label, source-list, and footer-note.
+7. Label each audience-specific section with visible text and color. Never communicate ownership by color alone.
+8. Use the orange accent for borders, bars, tags, and large emphasis. Use `--accent-text` for small orange text.
+9. Keep paragraphs concise. Prefer short sections, compact lists, and meaningful headings.
+10. Include print CSS, responsive CSS below 700px, and `break-inside: avoid` for sections.
+11. Use `.compact` only when a page must fit more content. Use `.accessible` when readability is more important than strict page count.
+12. Do not add gradients, illustrations, decorative icons, oversized shadows, or unrelated UI patterns.
+13. Keep all content factual and audience-ready. Do not include meta commentary about writing or presenting the document.
+14. Return one complete HTML file with embedded CSS and no external dependencies.
+
+Document content:
+[PASTE CONTENT OR REQUIREMENTS HERE]</code></pre>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="kicker">Final check</div>
+    <h2>Pre-delivery checklist</h2>
+    <ul class="checklist">
+      <li>All pages print at Letter size.</li>
+      <li>No section is unintentionally split.</li>
+      <li>No text is clipped by the footer.</li>
+      <li>Page numbers and footer labels are correct.</li>
+      <li>Every semantic section has a visible text label.</li>
+      <li>Small accent text uses the darker token.</li>
+      <li>Body text remains readable at browser zoom.</li>
+      <li>Mobile layout collapses to one column.</li>
+      <li>Only one primary recommendation dominates each page.</li>
+      <li>Sources and disclaimers are clearly separated from main content.</li>
+      <li>No external fonts, scripts, or CSS dependencies are required.</li>
+      <li>No meta-writing language appears in the final audience document.</li>
+    </ul>
+  </section>
+</main>
+
+<script>
+document.querySelectorAll("[data-copy]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const target = document.getElementById(button.dataset.copy);
+    const text = target.innerText;
+    try {
+      await navigator.clipboard.writeText(text);
+      const previous = button.textContent;
+      button.textContent = "Copied";
+      setTimeout(() => button.textContent = previous, 1200);
+    } catch (error) {
+      button.textContent = "Select manually";
+    }
+  });
+});
+</script>
+</body>
+</html>
