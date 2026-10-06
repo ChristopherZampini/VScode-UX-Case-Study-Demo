@@ -618,6 +618,10 @@ body.editorial {
   color: var(--accent-text);
   background: transparent;
 }
+.editorial .topbar nav a[aria-current="page"] {
+  color: var(--accent-text);
+  border-bottom-color: var(--accent);
+}
 .editorial .topbar .print-button {
   padding: 7px 0;
   color: var(--ink);
@@ -1158,12 +1162,8 @@ body.editorial {
   <a class="topbar-brand" href="index.html#top"><span class="brand-mark" aria-hidden="true">S</span> SYSTEMS / CASE STUDY</a>
   <nav aria-label="Case study navigation">
     <a href="index.html" aria-current="page">Case study</a>
-    <a href="case-study-part-2.html">Part 2: SSP features</a>
+    <a href="case-study-part-2.html">SSP workspace</a>
     <a href="briefcraft-design-system.html">Briefcraft system</a>
-    <a href="#context">Problem</a>
-    <a href="#guide">Approach</a>
-    <a href="#approach">Insight</a>
-    <a href="#product">Result</a>
   </nav>
   <button class="print-button" type="button" onclick="window.print()">Print / save PDF</button>
 </header>
@@ -1173,7 +1173,7 @@ body.editorial {
     <div>
       <p class="eyebrow">Manufacturing operations · CMMC Level 1</p>
       <h1 id="case-title">A clearer way to <span>prepare for Level 1.</span></h1>
-      <p class="hero-copy">A reusable preparation workspace, developed in an ISO 9001-certified manufacturing organization pursuing CMMC Level 2 assessment. It turns Level 1 requirements into connected work—and is designed to adapt to other standards-driven operations.</p>
+      <p class="hero-copy">A reusable preparation workspace, developed in an ISO 9001-certified manufacturing organization pursuing CMMC Level 2 assessment. It turns the Level 1 baseline into connected work—and makes the path from system scope to owner, policy, and evidence easier to follow.</p>
       <div class="hero-actions">
         <a class="button" href="#product">Explore the interactive prototype <span aria-hidden="true">↓</span></a>
         <a class="button secondary" href="#context">Read the case study <span aria-hidden="true">↘</span></a>
@@ -1245,6 +1245,10 @@ body.editorial {
         <div class="sequence-item"><strong>Policy</strong><span>What we document</span></div>
         <div class="sequence-item"><strong>Evidence</strong><span>What supports it</span></div>
       </div>
+      <div class="reuse-note">
+        <strong>Prototype, not a finished SSP.</strong>
+        The interactive sample demonstrates requirement tracking and related preparation workflows. It does not capture every system detail or replace an organization-specific SSP. <a href="case-study-part-2.html">See the proposed SSP structure and feature tour →</a>
+      </div>
       <div class="reuse-note"><strong>Designed to adapt.</strong> Keep the workflow; configure the requirements, owners, evidence, and review steps for another standard or operational use case.</div>
     </div>
   </section>
@@ -1253,7 +1257,7 @@ body.editorial {
     <div class="wrap">
       <div class="section-head">
         <div><span class="section-index">Result · Interactive prototype</span><h2 id="product-title">One workspace for the work.</h2></div>
-        <p>Track requirements, draft policies, and connect evidence.</p>
+        <p>Explore the sample workspace. Its records and workflow labels are illustrative—not formal assessment findings or a completed SSP.</p>
       </div>
       <div class="product-shell" aria-label="Interactive illustrative CMMC preparation workspace">
         <div class="product-chrome">

@@ -3,210 +3,421 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Part 2 of the CMMC readiness case study: an interactive tour of the sample SSP preparation workspace.">
-<title>Case Study Part 2 — SSP Workspace Features</title>
+<meta name="description" content="A guided tour of a CMMC SSP workspace concept, including an illustrative interface preview and a practical SSP outline.">
+<title>Part 2 — The SSP Workspace</title>
 <style>
 :root {
-  --ink: #111111;
+  --ink: #17191b;
   --muted: #5d646b;
   --line: #d9dde1;
-  --paper: #fbfaf7;
+  --paper: #fffefa;
   --soft: #f3f1eb;
   --accent: #f06543;
-  --accent-text: #a63d24;
+  --accent-dark: #a63d24;
   --blue: #1f4e79;
   --blue-soft: #eaf2f8;
   --green: #2f6b4f;
   --green-soft: #e8f3ec;
+  --purple: #5b437a;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; background: var(--soft); }
-body {
-  margin: 0;
-  color: var(--ink);
-  background: var(--soft);
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.55;
-}
+html { scroll-behavior: smooth; background: var(--soft); scroll-padding-top: 84px; }
+body { margin: 0; color: var(--ink); background: var(--soft); font: 16px/1.6 Arial, Helvetica, sans-serif; }
 a { color: var(--blue); }
-a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-.skip-link { position: absolute; top: -60px; left: 12px; z-index: 10; padding: 9px 12px; color: #fff; background: var(--ink); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.skip-link { position: absolute; top: -60px; left: 12px; z-index: 20; padding: 9px 12px; color: #fff; background: var(--ink); }
 .skip-link:focus { top: 10px; }
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  min-height: 64px;
-  padding: 10px max(22px, calc((100vw - 1180px) / 2));
-  color: #fff;
-  background: var(--ink);
-  border-bottom: 4px solid var(--accent);
+.topbar { position: sticky; top: 0; z-index: 10; display: flex; min-height: 66px; align-items: center; justify-content: space-between; gap: 24px; padding: 0 max(24px, calc((100vw - 1240px) / 2)); color: #fff; background: var(--ink); border-bottom: 4px solid var(--accent); }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .07em; text-decoration: none; white-space: nowrap; }
+.brand-mark { display: grid; width: 28px; height: 28px; place-items: center; color: var(--ink); background: var(--accent); border-radius: 50%; }
+.topbar nav { display: flex; align-items: center; gap: 24px; }
+.topbar nav a { padding: 7px 0; color: #ddd; border-bottom: 2px solid transparent; font-size: 12px; font-weight: 700; text-decoration: none; }
+.topbar nav a:hover, .topbar nav a[aria-current="page"] { color: #fff; border-bottom-color: var(--accent); }
+.page-width { width: min(1240px, calc(100% - 48px)); margin-inline: auto; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(240px, .65fr); gap: 48px; align-items: center; padding-block: 74px 54px; }
+.eyebrow, .kicker { margin: 0 0 9px; color: var(--accent-dark); font-size: 11px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+h1 { max-width: 850px; margin: 0 0 18px; font-size: clamp(44px, 7vw, 78px); line-height: .98; letter-spacing: -.06em; }
+.hero-copy { max-width: 740px; margin: 0; color: #42494f; font-size: clamp(17px, 2vw, 20px); }
+.hero-aside { padding: 20px; background: var(--paper); border: 1px solid var(--line); border-top: 5px solid var(--accent); }
+.hero-aside strong { display: block; margin-bottom: 7px; }
+.hero-aside p { margin: 0; color: var(--muted); font-size: 13px; }
+.hero-aside a { display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 700; }
+.guide-layout { display: grid; grid-template-columns: 226px minmax(0, 1fr); gap: 48px; align-items: start; padding: 26px 0 76px; border-top: 1px solid var(--line); }
+.outline { position: sticky; top: 92px; max-height: calc(100vh - 112px); overflow: auto; padding: 15px 0; }
+.outline-title { margin: 0 0 12px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.outline ol { margin: 0; padding: 0; list-style: none; counter-reset: outline; }
+.outline li { counter-increment: outline; }
+.outline a { display: grid; grid-template-columns: 27px 1fr; gap: 8px; padding: 8px 4px; color: #434a50; border-left: 2px solid transparent; font-size: 12px; line-height: 1.35; text-decoration: none; }
+.outline a::before { content: counter(outline, decimal-leading-zero); color: var(--accent-dark); font-size: 10px; font-weight: 800; }
+.outline a:hover, .outline a:focus-visible { color: var(--ink); border-left-color: var(--accent); }
+.chapters { min-width: 0; }
+.chapter { display: grid; grid-template-columns: minmax(0, .82fr) minmax(300px, 1.18fr); gap: 28px; align-items: center; padding: 38px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 86px; }
+.chapter:first-child { padding-top: 18px; }
+.chapter-copy { align-self: center; }
+.chapter-number { display: inline-block; margin-bottom: 10px; color: var(--accent-dark); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+h2 { margin: 0 0 11px; font-size: clamp(25px, 3vw, 36px); line-height: 1.08; letter-spacing: -.04em; }
+.chapter-copy > p { margin: 0 0 14px; color: #4f575d; font-size: 14px; }
+.chapter-copy h3 { margin: 18px 0 7px; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+.chapter-copy ul { margin: 0; padding-left: 19px; color: #42494f; font-size: 12px; }
+.chapter-copy li + li { margin-top: 4px; }
+.window { min-width: 0; overflow: hidden; background: #fff; border: 1px solid #c7cbd0; border-radius: 9px; box-shadow: 0 14px 35px rgba(23,25,27,.09); }
+.window-bar { display: flex; align-items: center; gap: 6px; min-height: 35px; padding: 0 12px; color: #e6e8e9; background: #24282b; font-size: 9px; }
+.window-dot { width: 7px; height: 7px; background: #858b90; border-radius: 50%; }
+.window-title { margin-left: 6px; overflow: hidden; color: #f4f4f4; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.window-body { padding: 15px; background: #f7f6f2; }
+.ui-eyebrow { margin: 0 0 6px; color: var(--blue); font-size: 8px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.ui-title { margin: 0 0 10px; font-size: 15px; line-height: 1.2; }
+.ui-muted { margin: 0; color: var(--muted); font-size: 9px; }
+.ui-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+.ui-card { min-width: 0; padding: 9px; background: #fff; border: 1px solid var(--line); border-radius: 5px; }
+.ui-card strong { display: block; margin-top: 3px; font-size: 13px; }
+.ui-card span, .ui-label { display: block; color: var(--muted); font-size: 8px; }
+.ui-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px; align-items: center; padding: 8px 9px; background: #fff; border: 1px solid var(--line); border-bottom: 0; font-size: 9px; }
+.ui-row:first-child { border-radius: 5px 5px 0 0; }
+.ui-row:last-child { border-bottom: 1px solid var(--line); border-radius: 0 0 5px 5px; }
+.ui-row strong { display: block; font-size: 9px; }
+.ui-row small { display: block; margin-top: 2px; color: var(--muted); font-size: 8px; }
+.ui-status { color: var(--green); font-size: 8px; font-weight: 800; white-space: nowrap; }
+.ui-status.open { color: var(--accent-dark); }
+.ui-status.review { color: var(--purple); }
+.ui-bar { height: 6px; margin-top: 8px; overflow: hidden; background: #e1e2e3; border-radius: 1px; }
+.ui-bar span { display: block; width: 42%; height: 100%; background: var(--green); }
+.ui-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.ui-field { min-height: 43px; padding: 8px; background: #fff; border: 1px solid var(--line); border-radius: 4px; }
+.ui-field strong { display: block; margin-top: 3px; font-size: 9px; }
+.ui-table { width: 100%; border-collapse: collapse; background: #fff; font-size: 8px; }
+.ui-table th, .ui-table td { padding: 7px 6px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+.ui-table th { color: var(--muted); background: #f1f0ec; font-size: 7px; text-transform: uppercase; }
+.family-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
+.family { padding: 6px; background: #fff; border: 1px solid var(--line); color: #37424a; font-size: 8px; }
+.family strong { display: block; color: var(--blue); font-size: 9px; }
+.outline-note { margin: 16px 0 0; padding: 14px 16px; color: #42494f; background: var(--blue-soft); border-left: 3px solid var(--blue); font-size: 12px; }
+.closing { margin-top: 26px; padding: 20px; background: var(--ink); color: #fff; }
+.closing h2 { font-size: 22px; }
+.closing p { margin: 0; color: #e0e1e2; font-size: 13px; }
+.closing a { display: inline-block; margin-top: 11px; color: #fff; font-size: 12px; font-weight: 700; }
+.footer { padding: 20px 0 34px; color: var(--muted); border-top: 1px solid var(--line); font-size: 11px; }
+.footer-inner { display: flex; justify-content: space-between; gap: 18px; }
+@media (max-width: 900px) {
+  .topbar { padding-inline: 20px; }
+  .guide-layout { grid-template-columns: 1fr; gap: 15px; }
+  .outline { position: static; max-height: none; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .outline ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
+  .chapter { grid-template-columns: minmax(0, .8fr) minmax(260px, 1.2fr); gap: 18px; }
 }
-.brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-size: 13px; font-weight: 800; text-decoration: none; white-space: nowrap; }
-.brand-mark { display: grid; width: 28px; height: 28px; place-items: center; color: var(--ink); background: var(--accent); border-radius: 8px; }
-.topbar nav { display: flex; flex-wrap: wrap; gap: 6px; }
-.topbar nav a { padding: 7px 9px; color: #eee; border-radius: 999px; font-size: 12px; text-decoration: none; }
-.topbar nav a:hover, .topbar nav a[aria-current="page"] { color: #fff; background: #303030; }
-main { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
-.hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(250px, .7fr); gap: 28px; align-items: center; padding: 76px 0 54px; }
-.eyebrow, .kicker { margin: 0 0 10px; color: var(--accent-text); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
-h1 { max-width: 800px; margin: 0 0 18px; font-size: clamp(42px, 7vw, 76px); line-height: .98; letter-spacing: -.06em; }
-.hero p { max-width: 690px; margin: 0; color: #444b51; font-size: clamp(16px, 2vw, 20px); }
-.hero-card { padding: 20px; background: var(--paper); border: 1px solid var(--line); border-top: 6px solid var(--accent); border-radius: 14px; box-shadow: 0 14px 35px rgba(17,17,17,.07); }
-.hero-card strong { display: block; margin-bottom: 8px; }
-.hero-card ul { margin: 0; padding-left: 19px; color: var(--muted); font-size: 13px; }
-.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-.button { display: inline-flex; min-height: 42px; align-items: center; padding: 10px 14px; color: #fff; background: var(--ink); border: 1px solid var(--ink); border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; }
-.button.secondary { color: var(--ink); background: var(--paper); border-color: var(--line); }
-.section { padding: 58px 0; scroll-margin-top: 82px; }
-.section.paper { width: 100vw; margin-left: calc((min(1180px, 100vw - 40px) - 100vw) / 2); padding: 58px max(20px, calc((100vw - 1180px) / 2)); background: var(--paper); border-block: 1px solid var(--line); }
-.section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, .65fr); gap: 30px; align-items: end; margin-bottom: 24px; }
-h2 { margin: 0; font-size: clamp(28px, 4vw, 46px); line-height: 1.06; letter-spacing: -.045em; }
-.section-head > p { margin: 0; color: var(--muted); }
-.feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.feature-card { display: flex; flex-direction: column; padding: 20px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
-.feature-card .number { color: var(--accent-text); font-size: 11px; font-weight: 800; letter-spacing: .08em; }
-.feature-card h3 { margin: 9px 0 8px; font-size: 21px; line-height: 1.12; }
-.feature-card p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
-.feature-card ul { margin: 0 0 18px; padding-left: 19px; color: #42484e; font-size: 13px; }
-.feature-card .button { align-self: flex-start; margin-top: auto; font-size: 12px; }
-.flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; counter-reset: stage; }
-.flow article { min-height: 155px; padding: 17px; background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--blue); border-radius: 10px; counter-increment: stage; }
-.flow article::before { content: "0" counter(stage); color: var(--blue); font-size: 11px; font-weight: 800; letter-spacing: .08em; }
-.flow h3 { margin: 9px 0 6px; font-size: 17px; }
-.flow p { margin: 0; color: var(--muted); font-size: 13px; }
-.notice { margin-top: 20px; padding: 15px 17px; color: #42484e; background: var(--green-soft); border-left: 4px solid var(--green); border-radius: 8px; font-size: 13px; }
-.footer { padding: 24px 0 40px; color: var(--muted); border-top: 1px solid var(--line); font-size: 12px; }
-.footer-inner { display: flex; justify-content: space-between; gap: 16px; }
-@media (max-width: 760px) {
-  .topbar { position: static; align-items: flex-start; flex-direction: column; padding: 12px 20px; }
-  .topbar nav { width: 100%; }
-  .hero, .section-head, .feature-grid { grid-template-columns: 1fr; }
-  .hero { padding-top: 48px; }
-  .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 480px) {
-  main { width: min(100% - 28px, 1180px); }
-  .flow { grid-template-columns: 1fr; }
+@media (max-width: 640px) {
+  .page-width { width: min(100% - 32px, 1240px); }
+  .topbar { position: static; align-items: flex-start; flex-direction: column; gap: 5px; padding-block: 11px; }
+  .topbar nav { width: 100%; gap: 17px; overflow-x: auto; }
+  .topbar nav a { flex: 0 0 auto; font-size: 11px; }
+  .hero { grid-template-columns: 1fr; gap: 22px; padding-block: 48px 36px; }
+  .outline ol { grid-template-columns: 1fr; }
+  .chapter { grid-template-columns: 1fr; gap: 16px; padding: 30px 0; }
+  .chapter:first-child { padding-top: 8px; }
+  .ui-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .family-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer-inner { flex-direction: column; }
 }
 @media print {
-  .topbar, .actions { display: none; }
+  .topbar, .outline { display: none; }
   html, body { background: #fff; }
-  main { width: auto; }
-  .hero { padding: 20px 0; }
-  .section, .section.paper { width: auto; margin: 0; padding: 24px 0; }
-  .feature-card, .flow article, .hero-card { break-inside: avoid; box-shadow: none; }
+  .page-width { width: auto; }
+  .hero { padding: 18px 0; }
+  .guide-layout { display: block; padding-top: 10px; }
+  .chapter { grid-template-columns: 1fr 1fr; padding: 18px 0; break-inside: avoid; }
+  .window { box-shadow: none; }
+  .closing { color: #000; background: #fff; border: 1px solid var(--line); }
+  .closing p, .closing a { color: #222; }
 }
 </style>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to Part 2</a>
+<a class="skip-link" href="#main">Skip to the SSP guide</a>
 <header class="topbar">
-  <a class="brand" href="index.html#top"><span class="brand-mark" aria-hidden="true">S</span> SYSTEMS / CASE STUDY</a>
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">S</span> SYSTEMS / CASE STUDY</a>
   <nav aria-label="Site navigation">
     <a href="index.html">Case study</a>
-    <a href="case-study-part-2.html" aria-current="page">Part 2: SSP features</a>
+    <a href="case-study-part-2.html" aria-current="page">SSP workspace</a>
     <a href="briefcraft-design-system.html">Briefcraft system</a>
   </nav>
 </header>
 <main id="main">
-  <section class="hero" id="top" aria-labelledby="part-two-title">
+  <section class="hero page-width" aria-labelledby="page-title">
     <div>
-      <p class="eyebrow">Case study · Part 2 · Interactive workspace tour</p>
-      <h1 id="part-two-title">From readiness work to a connected SSP workflow.</h1>
-      <p>Part 1 introduced the challenge and the prototype. This next chapter walks through the workspace features that bring requirements, owners, draft policies, and evidence into one reviewable flow.</p>
-      <div class="actions">
-        <a class="button" href="index.html?view=overview#product">Open the interactive SSP prototype</a>
-        <a class="button secondary" href="index.html">Back to Part 1</a>
-      </div>
+      <p class="eyebrow">Case study · Part 2 · Product concept</p>
+      <h1 id="page-title">A workspace built around the SSP.</h1>
+      <p class="hero-copy">A System Security Plan is more than a checklist. This concept organizes the system story, boundary, implementation, people, policies, evidence, and review into one traceable workspace. Each small product window below is a self-contained visual mockup—not a link to the Part 1 demo.</p>
     </div>
-    <aside class="hero-card" aria-label="Prototype feature summary">
-      <strong>What the prototype demonstrates</strong>
-      <ul>
-        <li>A readiness dashboard and prioritized next actions</li>
-        <li>Searchable, editable requirement tracking</li>
-        <li>Policy drafting structure and owner review</li>
-        <li>Evidence records linked to requirements</li>
-      </ul>
+    <aside class="hero-aside">
+      <strong>How to use this tour</strong>
+      <p>Follow the numbered outline from workspace overview through supporting records. The proposed structure is intentionally comprehensive; the organization should tailor it to its system, contract, assessment scope, and applicable CMMC level.</p>
+      <a href="#section-01">Start with Section 01 ↓</a>
     </aside>
   </section>
 
-  <section class="section paper" id="features" aria-labelledby="features-title">
-    <div class="section-head">
-      <div><p class="kicker">Workspace capabilities</p><h2 id="features-title">Every view supports the next step.</h2></div>
-      <p>Use the links below to open each corresponding interactive screen in the prototype. All sample organizations, statuses, policies, and evidence are illustrative.</p>
-    </div>
-    <div class="feature-grid">
-      <article class="feature-card">
-        <span class="number">01 · ORIENT</span>
-        <h3>Readiness overview</h3>
-        <p>See the Level 1 baseline, illustrative documentation progress, open input needs, and a short queue of practical next actions.</p>
-        <ul>
-          <li>Requirement and workflow status counts</li>
-          <li>Progress indicator tied to the 15-item sample baseline</li>
-          <li>Next actions name a practice and its suggested owner</li>
-        </ul>
-        <a class="button" href="index.html?view=overview#product">Open overview</a>
-      </article>
-      <article class="feature-card">
-        <span class="number">02 · TRACK</span>
-        <h3>Requirement tracker</h3>
-        <p>Turn each requirement into an owned, reviewable work item, then narrow the list to find a practice or status.</p>
-        <ul>
-          <li>Search by requirement, family, or practice</li>
-          <li>Filter by needs input, in progress, or documented</li>
-          <li>Update sample workflow status and follow evidence links</li>
-          <li>Export control is shown as a production-workflow placeholder</li>
-        </ul>
-        <a class="button" href="index.html?view=requirements#product">Open requirement tracker</a>
-      </article>
-      <article class="feature-card">
-        <span class="number">03 · DRAFT</span>
-        <h3>Policy builder</h3>
-        <p>Start from reusable policy sections while keeping organization-specific implementation decisions with accountable owners.</p>
-        <ul>
-          <li>Sample sections cover access, identity, physical protection, and integrity</li>
-          <li>Open a section to see its purpose and review prompts</li>
-          <li>Generate a lightweight outline interaction for follow-up</li>
-        </ul>
-        <a class="button" href="index.html?view=policies#product">Open policy builder</a>
-      </article>
-      <article class="feature-card">
-        <span class="number">04 · CONNECT</span>
-        <h3>Evidence hub</h3>
-        <p>Keep supporting records connected to the work they substantiate, with a visible owner and review date.</p>
-        <ul>
-          <li>Sample evidence table with requirement, owner, and review status</li>
-          <li>Add an illustrative record to see the workflow response</li>
-          <li>Surface unassigned records and missing review details</li>
-        </ul>
-        <a class="button" href="index.html?view=evidence#product">Open evidence hub</a>
-      </article>
-    </div>
-  </section>
+  <div class="guide-layout page-width">
+    <aside class="outline" aria-label="SSP section outline">
+      <p class="outline-title">SSP section map</p>
+      <ol>
+        <li><a href="#section-01">Workspace overview</a></li>
+        <li><a href="#section-02">Document control</a></li>
+        <li><a href="#section-03">System identification and scope</a></li>
+        <li><a href="#section-04">Environment and architecture</a></li>
+        <li><a href="#section-05">People and responsibilities</a></li>
+        <li><a href="#section-06">Security requirement implementation</a></li>
+        <li><a href="#section-07">Policies and procedures</a></li>
+        <li><a href="#section-08">Evidence register</a></li>
+        <li><a href="#section-09">Gaps and remediation</a></li>
+        <li><a href="#section-10">Assessment and review</a></li>
+        <li><a href="#section-11">Appendices and references</a></li>
+      </ol>
+    </aside>
 
-  <section class="section" id="workflow" aria-labelledby="workflow-title">
-    <div class="section-head">
-      <div><p class="kicker">End-to-end flow</p><h2 id="workflow-title">Connect the record, not just the checklist.</h2></div>
-      <p>The prototype is designed to make handoffs and missing information visible, rather than implying that a status alone proves implementation.</p>
-    </div>
-    <div class="flow">
-      <article><h3>Scope the boundary</h3><p>Identify the system, assets, users, and information in scope with the right stakeholders.</p></article>
-      <article><h3>Assign the work</h3><p>Translate requirements into practices with a named owner and a useful next action.</p></article>
-      <article><h3>Document the practice</h3><p>Draft policy language and capture how the organization actually implements the practice.</p></article>
-      <article><h3>Attach and review</h3><p>Connect supporting evidence, confirm ownership, and keep review dates visible.</p></article>
-    </div>
-    <div class="notice"><strong>Important boundary:</strong> This is an illustrative preparation prototype, not an authoritative SSP, assessor finding, or compliance determination. Do not enter CUI or sensitive evidence. Validate scope, implementation, policy, evidence handling, and assessment conclusions with the organization’s approved process and qualified stakeholders.</div>
-  </section>
+    <div class="chapters">
+      <section class="chapter" id="section-01" aria-labelledby="title-01">
+        <div class="chapter-copy">
+          <span class="chapter-number">Section 01 · Feature</span>
+          <h2 id="title-01">Workspace overview</h2>
+          <p>A landing page gives the team one quick read on the SSP’s health: what has an owner, what needs a decision, and what is coming up for review.</p>
+          <h3>What belongs here</h3>
+          <ul><li>System name, selected CMMC level, and current document version</li><li>Completion counts with explicit “illustrative” or “not assessed” labels</li><li>Open decisions, overdue reviews, and recently changed records</li></ul>
+        </div>
+        <div class="window" aria-label="Static preview of the workspace overview">
+          <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">SSP WORKSPACE / OVERVIEW</span></div>
+          <div class="window-body">
+            <p class="ui-eyebrow">Example manufacturer · CMMC Level 1</p><p class="ui-title">Readiness at a glance</p>
+            <div class="ui-grid"><div class="ui-card"><span>In-scope systems</span><strong>03</strong></div><div class="ui-card"><span>Practices recorded</span><strong>09 / 15</strong></div><div class="ui-card"><span>Owner decisions</span><strong>04</strong></div></div>
+            <div class="ui-card" style="margin-top:8px"><span>SSP information captured · sample only</span><div class="ui-bar"><span></span></div></div>
+            <div class="ui-row" style="margin-top:8px"><div><strong>Confirm external system connections</strong><small>Boundary review · IT owner</small></div><span class="ui-status open">NEEDS INPUT</span></div>
+            <div class="ui-row"><div><strong>Review evidence owner assignments</strong><small>Evidence register · Security owner</small></div><span class="ui-status review">IN REVIEW</span></div>
+          </div>
+        </div>
+      </section>
 
-  <footer class="footer">
-    <div class="footer-inner"><span>CMMC Level 1 preparation · Case study Part 2</span><span>Prototype data is illustrative; no assessment conclusion is represented.</span></div>
-  </footer>
+      <section class="chapter" id="section-02" aria-labelledby="title-02">
+        <div class="chapter-copy">
+          <span class="chapter-number">Section 02 · Establish the record</span>
+          <h2 id="title-02">Document control and executive summary</h2>
+          <p>Make the SSP identifiable, accountable, and reviewable before getting into technical detail.</p>
+          <h3>What belongs here</h3>
+          <ul><li>Title, system identifier, organization, version, date, author, and approver</li><li>Revision history, distribution/handling instructions, and review cadence</li><li>Purpose, system mission, selected assessment baseline, and concise scope summary</li></ul>
+        </div>
+        <div class="window" aria-label="Static preview of document control fields">
+          <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">DOCUMENT CONTROL / SSP-001</span></div>
+          <div class="window-body">
+            <p class="ui-eyebrow">Controlled document</p><p class="ui-title">System Security Plan</p>
+            <div class="ui-columns">
+              <div class="ui-field"><span class="ui-label">Document owner</span><strong>Information Security</strong></div><div class="ui-field"><span class="ui-label">Version / status</span><strong>0.8 · Working draft</strong></div>
+              <div class="ui-field"><span class="ui-label">Assessment baseline</span><strong>CMMC Level 1 · confirm scope</strong></div><div class="ui-field"><span class="ui-label">Next review</span><strong>Set by system owner</strong></div>
+            </div>
+            <table class="ui-table" style="margin-top:9px"><thead><tr><th>Version</th><th>Date</th><th>Change</th><th>Approval</th></tr></thead><tbody><tr><td>0.8</td><td>Sample</td><td>Initial draft structure</td><td>Pending</td></tr></tbody></table>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="section-03" aria-labelledby="title-03">
+        <div class="chapter-copy">
+          <span class="chapter-number">Section 03 · Define the system</span>
+          <h2 id="title-03">System identification, purpose, and scope</h2>
+          <p>Describe exactly what the plan covers—and what it does not. This is the foundation for deciding which requirements and evidence are relevant.</p>
+          <h3>What belongs here</h3>
+          <ul><li>System name, purpose, business function, owner, and operating location</li><li>Information types handled and the applicable information protection context</li><li>Included and excluded users, components, facilities, processes, and services</li><li>Boundary narrative and scope decisions with rationale</li></ul>
+        </div>
+        <div class="window" aria-label="Static preview of system scope fields">
+          <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">SYSTEM PROFILE / SCOPE</span></div>
+          <div class="window-body">
+            <p class="ui-eyebrow">System profile</p><p class="ui-title">Manufacturing Operations System</p>
+            <div class="ui-columns">
+              <div class="ui-field"><span class="ui-label">Business purpose</span><strong>Production planning and shop operations</strong></div><div class="ui-field"><span class="ui-label">System owner</span><strong>Operations Director · confirm</strong></div>
+              <div class="ui-field"><span class="ui-label">Information type</span><strong>FCI / CUI · determine with contract</strong></div><div class="ui-field"><span class="ui-label">Locations</span><strong>Main facility + approved remote access</strong></div>
+            </div>
+            <div class="ui-row" style="margin-top:9px"><div><strong>Scope boundary narrative</strong><small>Draft · identify included/excluded services and rationale</small></div><span class="ui-status open">INCOMPLETE</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="section-04" aria-labelledby="title-04">
+        <div class="chapter-copy">
+          <span class="chapter-number">Section 04 · Show how it works</span>
+          <h2 id="title-04">Operating environment, architecture, and connections</h2>
+          <p>Describe the technical and operational environment, including how the system boundary relates to other systems and services.</p>
+          <h3>What belongs here</h3>
+          <ul><li>Architecture and boundary diagrams with legends and current dates</li><li>Hardware, software, services, networks, facilities, and deployment locations</li><li>External connections, data flows, service providers, and shared environments</li><li>Trust boundaries, remote access, and relevant security assumptions</li></ul>
+        </div>
+        <div class="window" aria-label="Static preview of system architecture and interconnections">
+          <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">ARCHITECTURE / BOUNDARY VIEW</span></div>
+          <div class="window-body">
+            <p class="ui-eyebrow">System boundary · draft diagram view</p>
+            <div class="ui-columns">
+              <div class="ui-field"><span class="ui-label">IN-SCOPE · USER ZONE</span><strong>Managed workstations<br>Authorized users</strong></div><div class="ui-field"><span class="ui-label">IN-SCOPE · OPERATIONS</span><strong>Production systems<br>File services</strong></div>
+              <div class="ui-field"><span class="ui-label">EXTERNAL CONNECTION</span><strong>Approved cloud service<br>Connection owner: IT</strong></div><div class="ui-field"><span class="ui-label">SHARED SERVICE</span><strong>Identity provider<br>Responsibility: document</strong></div>
+            </div>
+            <p class="ui-muted" style="margin-top:9px">Diagram metadata: owner assigned · data flows need validation · last reviewed: not set</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="section-05" aria-labelledby="title-05">
+        <div class="chapter-copy">
+          <span class="chapter-number">Section 05 · Assign accountability</span>
+          <h2 id="title-05">Personnel, roles, and responsibilities</h2>
+          <p>Connect system operations to named accountable roles. Include internal teams and external parties without exposing unnecessary personal information.</p>
+          <h3>What belongs here</h3>
+          <ul><li>System owner, security lead, administrators, users, and approval authority</li><li>Responsibility matrix for implementation, evidence, review, and incident escalation</li><li>Service-provider roles, shared responsibilities, and points of contact</li><li>Training/awareness expectations and personnel onboarding/offboarding references</li></ul>
+        </div>
+        <div class="window" aria-label="Static preview of the responsibility matrix">
+          <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">PEOPLE / RESPONSIBILITY MATRIX</span></div>
+          <div class="window-body">
+            <table class="ui-table"><thead><tr><th>Role</th><th>Accountability</th><th>Records</th><th>State</th></tr></thead><tbody>
+              <tr><td>System owner</td><td>Scope, risk, approvals</td><td>Review log</td><td>Assign</td></tr>
+              <tr><td>IT administrator</td><td>Technical implementation</td><td>Config records</td><td>Confirm</td></tr>
+              <tr><td>Operations lead</td><td>Facility / process inputs</td><td>Operating procedures</td><td>Confirm</td></tr>
+              <tr><td>Service provider</td><td>Defined shared services</td><td>Agreement / evidence</td><td>Map</td></tr>
+            </tbody></table>
+            <p class="ui-muted" style="margin-top:8px">Owners shown are role examples, not verified assignments.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="section-06" aria-labelledby="title-06">
+        <div class="chapter-copy">
+          <span class="chapter-number">Section 06 · Explain implementation</span>
+          <h2 id="title-06">Security requirement implementation</h2>
+          <p>This is the heart of the SSP: explain how each applicable requirement is implemented in the defined system, who is responsible, and where supporting material is maintained. A status by itself is not an implementation statement.</p>
+          <h3>For each requirement, capture</h3>
+          <ul><li>Requirement ID and applicable baseline; applicability or tailoring rationale</li><li>System-specific implementation narrative, technologies, process, and responsible role</li><li>Inheritance/shared responsibility, dependencies, and referenced policy/evidence</li><li>Gaps, planned actions, or approved rationale where implementation is not applicable</li></ul>
+        </div>
+        <div class="window" aria-label="Static preview of a requirement implementation record">
+          <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">REQUIREMENTS / IMPLEMENTATION RECORD</span></div>
+          <div class="window-body">
+            <p class="ui-eyebrow">AC · Access control · sample record</p><p class="ui-title">Limit access to authorized users and devices</p>
+            <div class="ui-columns">
+              <div class="ui-field"><span class="ui-label">Applicability</span><strong>In scope · confirm against baseline</strong></div><div class="ui-field"><span class="ui-label">Responsible role</span><strong>IT administrator</strong></div>
+            </div>
+            <div class="ui-field" style="margin-top:8px"><span class="ui-label">Implementation statement</span><strong>Describe actual approval, account provisioning, access review, and device controls. Link the procedure and verify with the system owner.</strong></div>
+            <div class="ui-row" style="margin-top:8px"><div><strong>Linked procedure · Access management</strong><small>Linked evidence · account review record</small></div><span class="ui-status review">OWNER REVIEW</span></div>
+          </div>
+        </div>
+        <div class="outline-note" style="grid-column:1 / -1">
+          <strong>Baseline matters.</strong> The existing prototype is scoped around the 15 CMMC Level 1 requirements. A Level 2 SSP needs to address the applicable Level 2 requirements and assessment scope. The UI should load the correct baseline rather than imply one fixed checklist fits every system.
+          <div class="family-grid" style="margin-top:11px">
+            <div class="family"><strong>AC</strong>Access Control</div><div class="family"><strong>AT</strong>Awareness &amp; Training</div><div class="family"><strong>AU</strong>Audit &amp; Accountability</div><div class="family"><strong>CM</strong>Configuration Management</div>
+            <div class="family"><strong>IA</strong>Identification &amp; Authentication</div><div class="family"><strong>IR</strong>Incident Response</div><div class="family"><strong>MA</strong>Maintenance</div><div class="family"><strong>MP</strong>Media Protection</div>
+            <div class="family"><strong>PS</strong>Personnel Security</div><div class="family"><strong>PE</strong>Physical Protection</div><div class="family"><strong>RA</strong>Risk Assessment</div><div class="family"><strong>CA</strong>Security Assessment</div>
+            <div class="family"><strong>SC</strong>System &amp; Communications Protection</div><div class="family"><strong>SI</strong>System &amp; Information Integrity</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="section-07" aria-labelledby="title-07">
+        <div class="chapter-copy">
+          <span class="chapter-number">Section 07 · Document the operating model</span>
+          <h2 id="title-07">Policies, procedures, and operating practices</h2>
+          <p>Policies set expectations; procedures and operating records show how people carry them out. Link them to requirements, owners, approval status, and review dates.</p>
+          <h3>Common supporting material</h3>
+          <ul><li>Access control, identification, media, physical security, and configuration practices</li><li>Incident handling, maintenance, audit, training, and system integrity procedures</li><li>Document owner, approval/version, effective date, and scheduled review</li><li>Clear distinction between draft templates and approved organizational policy</li></ul>
+        </div>
+        <div class="window" aria-label="Static preview of policy and procedure records">
+          <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">POLICIES / PROCEDURES</span></div>
+          <div class="window-body">
+            <div class="ui-row"><div><strong>Account management procedure</strong><small>Owner: IT · linked requirements: AC, IA</small></div><span class="ui-status">APPROVED</span></div>
+            <div class="ui-row"><div><strong>Incident response plan</strong><small>Owner: Security · test date: not recorded</small></div><span class="ui-status open">NEEDS REVIEW</span></div>
+            <div class="ui-row"><div><strong>Media handling policy</strong><small>Owner: Operations · approval: pending</small></div><span class="ui-status review">DRAFT</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="section-08" aria-labelledby="title-08">
+        <div class="chapter-copy">
+          <span class="chapter-number">Section 08 · Make evidence traceable</span>
+          <h2 id="title-08">Evidence and artifact register</h2>
+          <p>An SSP can reference supporting artifacts without embedding sensitive evidence in an unsafe location. Record enough metadata to find, validate, and review each approved artifact.</p>
+          <h3>What belongs here</h3>
+          <ul><li>Artifact name/type, linked requirement, repository reference, and owner</li><li>Collection period, date, version, review status, and retention/handling notes</li><li>Evidence sufficiency and relevance reviewed by an accountable person</li><li>Approved location and access restrictions—never store CUI in this demo</li></ul>
+        </div>
+        <div class="window" aria-label="Static preview of the evidence register">
+          <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">EVIDENCE / REGISTER</span></div>
+          <div class="window-body">
+            <table class="ui-table"><thead><tr><th>Artifact</th><th>Linked area</th><th>Owner</th><th>Review</th></tr></thead><tbody>
+              <tr><td>Access review procedure</td><td>AC / IA</td><td>IT</td><td>Current?</td></tr>
+              <tr><td>Visitor log sample</td><td>PE</td><td>Facilities</td><td>Verify period</td></tr>
+              <tr><td>Boundary diagram v.3</td><td>SC / CM</td><td>Security</td><td>Approval needed</td></tr>
+            </tbody></table>
+            <p class="ui-muted" style="margin-top:8px">References only · evidence stored in approved repository</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="section-09" aria-labelledby="title-09">
+        <div class="chapter-copy">
+          <span class="chapter-number">Section 09 · Manage open work</span>
+          <h2 id="title-09">Gaps, risks, and remediation tracking</h2>
+          <p>Keep deficiencies and decisions visible, assign an owner, and track planned actions to closure. Preserve the distinction between preparation status and formal assessment results.</p>
+          <h3>What belongs here</h3>
+          <ul><li>Gap/decision description, affected requirement, risk, owner, and discovery date</li><li>Planned action, due date, dependencies, milestones, and closure evidence</li><li>Escalations, accepted risks, and approvals documented through governance</li><li>Separate POA&amp;M handling where required; confirm eligibility and rules before use</li></ul>
+        </div>
+        <div class="window" aria-label="Static preview of a remediation action register">
+          <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">OPEN ACTIONS / REMEDIATION</span></div>
+          <div class="window-body">
+            <div class="ui-row"><div><strong>Validate approved external connections</strong><small>Related area: SC · owner: IT · due: set by owner</small></div><span class="ui-status open">OPEN</span></div>
+            <div class="ui-row"><div><strong>Confirm annual visitor-log review</strong><small>Related area: PE · owner: Facilities · evidence needed</small></div><span class="ui-status review">IN PROGRESS</span></div>
+            <div class="ui-row"><div><strong>Reconcile system inventory to boundary diagram</strong><small>Related area: CM · owner: Security · approval required</small></div><span class="ui-status open">DECISION</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="section-10" aria-labelledby="title-10">
+        <div class="chapter-copy">
+          <span class="chapter-number">Section 10 · Keep it current</span>
+          <h2 id="title-10">Assessment, review, approvals, and change history</h2>
+          <p>Show how the SSP is maintained as the system changes and how implementation statements and evidence are reviewed.</p>
+          <h3>What belongs here</h3>
+          <ul><li>Review triggers and cadence; change-impact analysis and change log</li><li>Approval roles, review evidence, and unresolved questions</li><li>Assessment/validation records kept distinct from internal workflow status</li><li>Periodic confirmation of boundary, interconnections, owners, and requirement narratives</li></ul>
+        </div>
+        <div class="window" aria-label="Static preview of review and approval history">
+          <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">GOVERNANCE / REVIEW HISTORY</span></div>
+          <div class="window-body">
+            <div class="ui-columns">
+              <div class="ui-field"><span class="ui-label">Last boundary review</span><strong>Date not set · owner assigned</strong></div><div class="ui-field"><span class="ui-label">SSP approval</span><strong>Draft · approval pending</strong></div>
+            </div>
+            <table class="ui-table" style="margin-top:9px"><thead><tr><th>Change</th><th>Impact reviewed</th><th>Approver</th></tr></thead><tbody>
+              <tr><td>Added cloud service connection</td><td>Scope, diagram, requirements</td><td>Pending</td></tr>
+              <tr><td>Updated access procedure</td><td>AC / IA narratives</td><td>Pending</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="section-11" aria-labelledby="title-11">
+        <div class="chapter-copy">
+          <span class="chapter-number">Section 11 · Make the plan usable</span>
+          <h2 id="title-11">Appendices, definitions, and references</h2>
+          <p>Keep supporting material organized and navigable. Reference authoritative source documents and version them so reviewers know what the plan relied on.</p>
+          <h3>Useful appendices</h3>
+          <ul><li>System inventory, data-flow and boundary diagrams, and glossary</li><li>Responsibility/shared-service matrix and cross-reference tables</li><li>Abbreviations, assumptions, scope decisions, and change history</li><li>Applicable contract clauses, assessment guides, and organizational standards</li></ul>
+        </div>
+        <div class="window" aria-label="Static preview of appendix and source references">
+          <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">APPENDICES / SOURCE LIBRARY</span></div>
+          <div class="window-body">
+            <div class="ui-row"><div><strong>A · System inventory</strong><small>Asset register · owner and version recorded</small></div><span class="ui-status">REFERENCE</span></div>
+            <div class="ui-row"><div><strong>B · Boundary and data-flow diagrams</strong><small>Architecture library · review date recorded</small></div><span class="ui-status">REFERENCE</span></div>
+            <div class="ui-row"><div><strong>C · Glossary and abbreviations</strong><small>Plan appendix · maintained with document</small></div><span class="ui-status">REFERENCE</span></div>
+            <div class="ui-row"><div><strong>D · Governing sources</strong><small>Contract and assessment guidance · verify versions</small></div><span class="ui-status review">VERIFY</span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="outline-note">
+        <strong>Why this outline:</strong> The SSP should identify the system boundary, operating environment, how applicable security requirements are implemented, and the system’s relationships or connections to other systems. The sections above make those core elements easier to author and maintain. Exact contents, baseline, handling, and assessment expectations depend on the organization’s scope and governing requirements; confirm them with the appropriate stakeholders and current authoritative guidance.
+      </div>
+      <section class="closing">
+        <h2>From concept to a reviewable SSP</h2>
+        <p>The existing interactive sample remains a Level 1 workflow prototype. This Part 2 page expands the product direction to show the broader information architecture an organization would need to build, tailor, approve, and maintain its own plan.</p>
+        <a href="index.html">Return to Part 1: the case study →</a>
+      </section>
+    </div>
+  </div>
 </main>
+<footer class="footer"><div class="page-width footer-inner"><span>CMMC preparation workspace · Part 2</span><span>All interface content is illustrative; do not enter CUI or sensitive information.</span></div></footer>
 </body>
 </html>

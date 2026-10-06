@@ -79,16 +79,22 @@ button {
 .topbar nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 20px;
 }
 
 .topbar a {
-  padding: 5px 8px;
-  color: #ffffff;
-  border: 1px solid #555555;
-  border-radius: 999px;
+  padding: 5px 0;
+  color: #e9e9e9;
+  border-bottom: 2px solid transparent;
   font-size: 12px;
+  font-weight: 700;
   text-decoration: none;
+}
+.topbar a:hover,
+.topbar a:focus-visible,
+.topbar a[aria-current="page"] {
+  color: #ffffff;
+  border-bottom-color: var(--accent);
 }
 
 .guide {
@@ -749,17 +755,10 @@ pre {
 <body>
 <div class="topbar">
   <strong>Briefcraft Design System</strong>
-  <nav aria-label="Design system sections">
+  <nav aria-label="Site navigation">
     <a href="index.html">Case study</a>
-    <a href="case-study-part-2.html">Part 2: SSP features</a>
-    <a href="#principles">Principles</a>
-    <a href="#tokens">Tokens</a>
-    <a href="#type">Type</a>
-    <a href="#anatomy">Page anatomy</a>
-    <a href="#components">Components</a>
-    <a href="#accessibility">Accessibility</a>
-    <a href="#starter">Starter code</a>
-    <a href="#prompt">Prompt</a>
+    <a href="case-study-part-2.html">SSP workspace</a>
+    <a href="briefcraft-design-system.html" aria-current="page">Briefcraft system</a>
   </nav>
 </div>
 
