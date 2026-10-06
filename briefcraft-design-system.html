@@ -23,8 +23,8 @@
   --warn: #fff7f4;
 
   /* Audience ownership colors */
-  --atlantic: #1f4e79;
-  --atlantic-soft: #eaf2f8;
+  --client: #1f4e79;
+  --client-soft: #eaf2f8;
   --input: #2f6b4f;
   --input-soft: #e8f3ec;
   --christopher: #9a3412;
@@ -51,7 +51,7 @@ body {
 }
 
 a {
-  color: var(--atlantic);
+  color: var(--client);
 }
 
 button {
@@ -63,37 +63,56 @@ button {
   top: 0;
   z-index: 10;
   display: flex;
-  gap: 14px;
+  min-height: 66px;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
-  color: #ffffff;
+  gap: 24px;
+  line-height: 1.5;
+  padding: 0 max(24px, calc((100vw - 1240px) / 2));
+  color: #fff;
   background: var(--ink);
   border-bottom: 4px solid var(--accent);
 }
 
-.topbar strong {
-  font-size: 14px;
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand-mark {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: var(--ink);
+  background: var(--accent);
+  border-radius: 50%;
 }
 
 .topbar nav {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  align-items: center;
+  gap: 24px;
 }
 
-.topbar a {
-  padding: 5px 0;
-  color: #e9e9e9;
+.topbar nav a {
+  padding: 7px 0;
+  color: #ddd;
   border-bottom: 2px solid transparent;
   font-size: 12px;
   font-weight: 700;
   text-decoration: none;
 }
-.topbar a:hover,
-.topbar a:focus-visible,
-.topbar a[aria-current="page"] {
-  color: #ffffff;
+.topbar nav a:hover,
+.topbar nav a:focus-visible,
+.topbar nav a[aria-current="page"] {
+  color: #fff;
   border-bottom-color: var(--accent);
 }
 
@@ -536,10 +555,10 @@ button {
   font-size: 7px;
 }
 
-.demo-page .key-atlantic,
-.demo-page .audience-atlantic .audience-label {
-  color: var(--atlantic);
-  background: var(--atlantic-soft);
+.demo-page .key-client,
+.demo-page .audience-client .audience-label {
+  color: var(--client);
+  background: var(--client-soft);
 }
 
 .demo-page .key-input,
@@ -560,8 +579,8 @@ button {
   background: var(--shared-soft);
 }
 
-.demo-page .audience-atlantic {
-  border-left: 5px solid var(--atlantic);
+.demo-page .audience-client {
+  border-left: 5px solid var(--client);
 }
 
 .demo-page .audience-input {
@@ -706,14 +725,11 @@ pre {
     grid-template-columns: 1fr;
   }
 
-  .topbar {
-    position: static;
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
   .checklist {
     columns: 1;
+  }
+  @media (max-width: 980px) {
+    .topbar { padding-inline: 20px; }
   }
 
   .demo-page .document-header,
@@ -726,6 +742,11 @@ pre {
   .demo-page .side-note {
     text-align: left;
   }
+}
+@media (max-width: 640px) {
+  .topbar { position: static; align-items: flex-start; flex-direction: column; gap: 5px; padding: 11px 16px; }
+  .topbar nav { width: 100%; gap: 17px; overflow-x: auto; }
+  .topbar nav a { flex: 0 0 auto; font-size: 11px; }
 }
 
 @media print {
@@ -750,22 +771,89 @@ pre {
     break-inside: avoid;
   }
 }
+
+.topbar.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  min-height: 66px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 max(24px, calc((100vw - 1240px) / 2));
+  color: #fff;
+  background: var(--ink);
+  border-bottom: 4px solid var(--accent);
+  line-height: 1.5;
+}
+.topbar.site-header .site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.topbar.site-header .site-brand-mark {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: var(--ink);
+  background: var(--accent);
+  border-radius: 50%;
+}
+.topbar.site-header nav.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.topbar.site-header nav.site-nav a {
+  padding: 7px 0;
+  color: #ddd;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+.topbar.site-header nav.site-nav a:hover,
+.topbar.site-header nav.site-nav a:focus-visible,
+.topbar.site-header nav.site-nav a[aria-current="page"] {
+  color: #fff;
+  background: transparent;
+  border-bottom-color: var(--accent);
+}
+@media (max-width: 980px) {
+  .topbar.site-header { padding-inline: 20px; }
+}
+@media (max-width: 640px) {
+  .topbar.site-header { position: static; align-items: flex-start; flex-direction: column; gap: 5px; padding: 11px 16px; }
+  .topbar.site-header nav.site-nav { width: 100%; gap: 17px; overflow-x: auto; }
+  .topbar.site-header nav.site-nav a { flex: 0 0 auto; font-size: 11px; }
+}
 </style>
 </head>
 <body>
-<div class="topbar">
-  <strong>Briefcraft Design System</strong>
-  <nav aria-label="Site navigation">
+<header class="topbar site-header">
+  <a class="site-brand" href="index.html"><span class="site-brand-mark" aria-hidden="true">S</span> SYSTEMS / CASE STUDY</a>
+  <nav class="site-nav" aria-label="Site navigation">
     <a href="index.html">Case study</a>
     <a href="case-study-part-2.html">SSP workspace</a>
     <a href="briefcraft-design-system.html" aria-current="page">Briefcraft system</a>
   </nav>
-</div>
+</header>
 
 <main class="guide">
   <section class="hero">
     <div>
-      <div class="eyebrow">Reusable HTML document system · Extracted from the Atlantic CMMC brief</div>
+      <div class="eyebrow">Reusable HTML document system · Extracted from the Briefcraft CMMC brief</div>
       <h1>Build compact, executive-ready briefs with consistent structure.</h1>
       <p>
         This reference captures the visual rules, CSS tokens, page geometry,
@@ -833,7 +921,7 @@ pre {
       <div class="swatch"><div class="swatch-color" style="background:#a63d24"></div><div class="swatch-copy"><strong>Accent text</strong><code>--accent-text: #a63d24</code></div></div>
       <div class="swatch"><div class="swatch-color" style="background:#e8f3ec"></div><div class="swatch-copy"><strong>Good surface</strong><code>--good: #e8f3ec</code></div></div>
       <div class="swatch"><div class="swatch-color" style="background:#fff7f4"></div><div class="swatch-copy"><strong>Warning surface</strong><code>--warn: #fff7f4</code></div></div>
-      <div class="swatch"><div class="swatch-color" style="background:#1f4e79"></div><div class="swatch-copy"><strong>Client action</strong><code>--atlantic: #1f4e79</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#1f4e79"></div><div class="swatch-copy"><strong>Client action</strong><code>--client: #1f4e79</code></div></div>
       <div class="swatch"><div class="swatch-color" style="background:#2f6b4f"></div><div class="swatch-copy"><strong>Input required</strong><code>--input: #2f6b4f</code></div></div>
       <div class="swatch"><div class="swatch-color" style="background:#9a3412"></div><div class="swatch-copy"><strong>Author role</strong><code>--christopher: #9a3412</code></div></div>
       <div class="swatch"><div class="swatch-color" style="background:#5b437a"></div><div class="swatch-copy"><strong>Shared decision</strong><code>--shared: #5b437a</code></div></div>
@@ -860,8 +948,8 @@ pre {
   --warn: #fff7f4;
 
   /* Audience ownership colors */
-  --atlantic: #1f4e79;
-  --atlantic-soft: #eaf2f8;
+  --client: #1f4e79;
+  --client-soft: #eaf2f8;
   --input: #2f6b4f;
   --input-soft: #e8f3ec;
   --christopher: #9a3412;
@@ -942,14 +1030,14 @@ pre {
 
         <div class="section-key">
           <span class="section-key-title">Section guide</span>
-          <span class="key-item key-atlantic">Client action</span>
+          <span class="key-item key-client">Client action</span>
           <span class="key-item key-input">Input required</span>
           <span class="key-item key-christopher">Author work</span>
           <span class="key-item key-shared">Shared decision</span>
         </div>
 
         <main class="document-grid">
-          <section class="value-prop audience-atlantic">
+          <section class="value-prop audience-client">
             <div class="audience-label">Client action</div>
             <h2>Recommended path</h2>
             <p class="big-line">Make the primary recommendation visually dominant.</p>
@@ -979,7 +1067,7 @@ pre {
       <div class="demo-frame">
         <article class="demo-page">
           <main class="document-grid" style="margin-top:0;">
-            <section class="block full accent-block audience-atlantic">
+            <section class="block full accent-block audience-client">
               <div class="audience-label">Client context</div>
               <h2>Status summary</h2>
               <div class="status-row">
@@ -1006,7 +1094,7 @@ pre {
               <p style="font-size:15px;font-weight:800;line-height:1.15;color:#fff;">Use a dark callout for the operating model, final conclusion, or high-priority ownership statement.</p>
             </section>
 
-            <section class="block full audience-atlantic">
+            <section class="block full audience-client">
               <div class="audience-label">Client action</div>
               <h2>Positive confirmation</h2>
               <div class="good-box"><strong>What this means:</strong> Use the green surface for confirmed readiness, a validated distinction, or a low-risk action.</div>
@@ -1041,7 +1129,7 @@ pre {
     <table class="spec-table">
       <thead><tr><th>Meaning</th><th>Section class</th><th>Label examples</th></tr></thead>
       <tbody>
-        <tr><td>Client action or context</td><td><code>.audience-atlantic</code></td><td>Client action, Client context</td></tr>
+        <tr><td>Client action or context</td><td><code>.audience-client</code></td><td>Client action, Client context</td></tr>
         <tr><td>Client input required</td><td><code>.audience-input</code></td><td>Input required, Client decision needed</td></tr>
         <tr><td>Author work or role</td><td><code>.audience-christopher</code></td><td>Author work, Author deliverable, Author role</td></tr>
         <tr><td>Shared decision</td><td><code>.audience-shared</code></td><td>Shared decision, Joint ownership</td></tr>
@@ -1134,8 +1222,8 @@ pre {
   --warn: #fff7f4;
 
   /* Audience ownership colors */
-  --atlantic: #1f4e79;
-  --atlantic-soft: #eaf2f8;
+  --client: #1f4e79;
+  --client-soft: #eaf2f8;
   --input: #2f6b4f;
   --input-soft: #e8f3ec;
   --christopher: #9a3412;
@@ -1540,10 +1628,10 @@ td {
   line-height: 1;
 }
 
-.key-atlantic,
-.audience-atlantic .audience-label {
-  color: var(--atlantic);
-  background: var(--atlantic-soft);
+.key-client,
+.audience-client .audience-label {
+  color: var(--client);
+  background: var(--client-soft);
 }
 
 .key-input,
@@ -1570,8 +1658,8 @@ td {
   background: var(--reference-soft);
 }
 
-section.audience-atlantic {
-  border-left: 5px solid var(--atlantic);
+section.audience-client {
+  border-left: 5px solid var(--client);
 }
 
 section.audience-input {
@@ -1739,14 +1827,14 @@ section.audience-reference {
 
   &lt;div class=&quot;section-key&quot; aria-label=&quot;Section ownership guide&quot;&gt;
     &lt;span class=&quot;section-key-title&quot;&gt;Section guide&lt;/span&gt;
-    &lt;span class=&quot;key-item key-atlantic&quot;&gt;Client action or context&lt;/span&gt;
+    &lt;span class=&quot;key-item key-client&quot;&gt;Client action or context&lt;/span&gt;
     &lt;span class=&quot;key-item key-input&quot;&gt;Client input required&lt;/span&gt;
     &lt;span class=&quot;key-item key-christopher&quot;&gt;Author work or role&lt;/span&gt;
     &lt;span class=&quot;key-item key-shared&quot;&gt;Shared decision&lt;/span&gt;
   &lt;/div&gt;
 
   &lt;main class=&quot;document-grid&quot;&gt;
-    &lt;section class=&quot;value-prop audience-atlantic&quot;&gt;
+    &lt;section class=&quot;value-prop audience-client&quot;&gt;
       &lt;div class=&quot;audience-label&quot;&gt;Client action&lt;/div&gt;
       &lt;h2&gt;Recommended path&lt;/h2&gt;
       &lt;p class=&quot;big-line&quot;&gt;Put the most important conclusion here.&lt;/p&gt;
